@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aviso Legal — The BTC Pulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fafafa;--card:#fff;--border:#e8e8e8;
+    --text:#1a1a1a;--text2:#444;--text3:#888;
+    --accent:#0891b2;--accent-bg:rgba(8,145,178,.05);--accent-bd:rgba(8,145,178,.15);
+    --warn:#dc2626;--warn-bg:rgba(220,38,38,.04);--warn-bd:rgba(220,38,38,.15);
+  }
+  @media(prefers-color-scheme:dark){
+    :root{
+      --bg:#0a0a0f;--card:rgba(18,20,32,.9);--border:#1e2235;
+      --text:#e2e8f0;--text2:#a0aec0;--text3:#5a6f8e;
+      --accent:#06b6d4;--accent-bg:rgba(6,182,212,.06);--accent-bd:rgba(6,182,212,.2);
+      --warn:#f87171;--warn-bg:rgba(248,113,113,.06);--warn-bd:rgba(248,113,113,.2);
+    }
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:640px;margin:0 auto;padding:3rem 1.5rem 4rem;}
+  .back{display:inline-flex;align-items:center;gap:.4rem;color:var(--text3);text-decoration:none;font-size:.85rem;font-weight:500;margin-bottom:2rem;transition:color .2s;}
+  .back:hover{color:var(--text);}
+  .back svg{width:16px;height:16px;}
+  h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.8rem;margin-bottom:.3rem;letter-spacing:-.02em;}
+  .subtitle{color:var(--text3);font-size:.85rem;margin-bottom:2.5rem;}
+  .lang-toggle{display:inline-flex;gap:.5rem;margin-bottom:2rem;font-size:.8rem;}
+  .lang-toggle button{background:none;border:1px solid var(--border);color:var(--text3);padding:.3rem .7rem;border-radius:4px;cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s;}
+  .lang-toggle button.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+
+  .warn-box{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:2rem;}
+  .warn-box .icon{font-size:1.2rem;margin-bottom:.5rem;}
+  .warn-box p{font-size:.9rem;font-weight:500;color:var(--warn);line-height:1.6;}
+
+  section{margin-bottom:2rem;}
+  h2{font-size:1rem;font-weight:700;margin-bottom:.7rem;letter-spacing:-.01em;}
+  p{font-size:.9rem;color:var(--text2);margin-bottom:.8rem;}
+  ul{margin:.5rem 0 1rem 1.2rem;font-size:.88rem;color:var(--text2);}
+  ul li{margin-bottom:.4rem;}
+
+  .info-box{background:var(--accent-bg);border:1px solid var(--accent-bd);border-radius:10px;padding:1.2rem 1.4rem;margin:2rem 0;}
+  .info-box p{color:var(--accent);font-size:.88rem;font-weight:500;margin:0;}
+
+  .footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);color:var(--text3);font-size:.78rem;text-align:center;}
+
+  .es,.en{display:none;}
+  .show-es .es{display:block;}
+  .show-en .en{display:block;}
+</style>
+</head>
+<body class="show-es">
+<div class="wrap">
+  <a href="index.html" class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> <span class="es">Volver</span><span class="en">Back</span></a>
+
+  <div class="lang-toggle">
+    <button class="active" id="btn-es" onclick="setLang('es')">ES</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <h1><span class="es">Aviso Legal</span><span class="en">Legal Disclaimer</span></h1>
+  <div class="subtitle"><span class="es">Última actualización: abril 2026</span><span class="en">Last updated: April 2026</span></div>
+
+  <!-- ADVERTENCIA PRINCIPAL -->
+  <div class="warn-box">
+    <div class="icon">⚠️</div>
+    <p class="es">Este sitio web NO proporciona asesoramiento financiero, de inversión ni de trading. La información presentada es de carácter exclusivamente informativo y experimental.</p>
+    <p class="en">This website does NOT provide financial, investment, or trading advice. The information presented is for informational and experimental purposes only.</p>
+  </div>
+
+  <!-- NATURALEZA DEL SERVICIO -->
+  <section>
+    <h2><span class="es">1. Naturaleza del servicio</span><span class="en">1. Nature of the service</span></h2>
+    <p class="es">The BTC Pulse es un proyecto experimental que muestra señales direccionales semanales para Bitcoin basadas en el análisis de datos macroeconómicos públicos.</p>
+    <p class="en">The BTC Pulse is an experimental project that displays weekly directional signals for Bitcoin based on the analysis of public macroeconomic data.</p>
+  </section>
+
+  <!-- NO ES ASESORAMIENTO -->
+  <section>
+    <h2><span class="es">2. Esto no es asesoramiento financiero</span><span class="en">2. This is not financial advice</span></h2>
+    <p class="es">La información ofrecida en este sitio web:</p>
+    <p class="en">The information provided on this website:</p>
+    <ul>
+      <li class="es">No constituye asesoramiento financiero, de inversión ni de trading.</li>
+      <li class="en">Does not constitute financial, investment, or trading advice.</li>
+      <li class="es">No es una recomendación de compra, venta ni mantenimiento de ningún activo financiero.</li>
+      <li class="en">Is not a recommendation to buy, sell, or hold any financial asset.</li>
+      <li class="es">No debe utilizarse como única base para tomar decisiones financieras.</li>
+      <li class="en">Should not be used as the sole basis for making financial decisions.</li>
+      <li class="es">No sustituye el asesoramiento profesional de un asesor financiero registrado.</li>
+      <li class="en">Does not replace professional advice from a registered financial advisor.</li>
+    </ul>
+    <p class="es">El autor de este sitio <strong>no es un asesor financiero registrado</strong> ni posee ninguna licencia o certificación para ofrecer servicios de asesoramiento financiero.</p>
+    <p class="en">The author of this website is <strong>not a registered financial advisor</strong> and does not hold any license or certification to provide financial advisory services.</p>
+  </section>
+
+  <!-- RIESGO -->
+  <section>
+    <h2><span class="es">3. Riesgo y responsabilidad</span><span class="en">3. Risk and liability</span></h2>
+    <p class="es">El trading de criptomonedas y derivados financieros conlleva un <strong>riesgo elevado de pérdida de capital</strong>, incluyendo la posibilidad de perder la totalidad de la inversión. El uso de apalancamiento multiplica tanto las ganancias como las pérdidas potenciales.</p>
+    <p class="en">Cryptocurrency and financial derivatives trading carries a <strong>high risk of capital loss</strong>, including the possibility of losing the entire investment. The use of leverage multiplies both potential gains and losses.</p>
+    <p class="es">Cualquier decisión que tomes basándote en la información de este sitio es <strong>bajo tu exclusiva responsabilidad</strong>. El autor no será responsable de ninguna pérdida o daño derivado del uso de esta información.</p>
+    <p class="en">Any decision you make based on the information on this website is <strong>at your own risk</strong>. The author shall not be liable for any loss or damage arising from the use of this information.</p>
+  </section>
+
+  <!-- RESULTADOS PASADOS -->
+  <section>
+    <h2><span class="es">4. Resultados pasados</span><span class="en">4. Past performance</span></h2>
+    <p class="es">Los resultados históricos mostrados en este sitio (targets alcanzados, historial de señales) <strong>no garantizan resultados futuros</strong>. El rendimiento pasado de cualquier sistema de trading no es indicativo de rendimientos futuros. Las condiciones de mercado cambian y un sistema que ha funcionado en el pasado puede dejar de hacerlo.</p>
+    <p class="en">Historical results shown on this website (targets hit, signal history) <strong>do not guarantee future results</strong>. Past performance of any trading system is not indicative of future returns. Market conditions change and a system that has worked in the past may cease to do so.</p>
+  </section>
+
+  <!-- SISTEMA EXPERIMENTAL -->
+  <section>
+    <h2><span class="es">5. Sistema experimental</span><span class="en">5. Experimental system</span></h2>
+    <p class="es">The BTC Pulse es un proyecto personal y experimental. La metodología está basada en una tesis macroeconómica propia. Esta tesis, como cualquier modelo, puede ser incorrecta, incompleta o dejar de ser válida en cualquier momento.</p>
+    <p class="en">The BTC Pulse is a personal and experimental project. The methodology is based on a proprietary macroeconomic thesis. This thesis, like any model, may be incorrect, incomplete, or may cease to be valid at any time.</p>
+  </section>
+
+  <!-- DATOS DE TERCEROS -->
+  <section>
+    <h2><span class="es">6. Datos de terceros</span><span class="en">6. Third-party data</span></h2>
+    <p class="es">Este sitio utiliza datos de fuentes públicas. Aunque se hace un esfuerzo por mantener la precisión, no se garantiza que los datos sean correctos, completos o estén actualizados en todo momento. Los errores en las fuentes de datos podrían resultar en señales incorrectas.</p>
+    <p class="en">This website uses data from public sources. While efforts are made to maintain accuracy, there is no guarantee that data is correct, complete, or up to date at all times. Errors in data sources could result in incorrect signals.</p>
+  </section>
+
+  <!-- REEMBOLSOS -->
+  <section>
+    <h2><span class="es">7. Política de reembolsos</span><span class="en">7. Refund policy</span></h2>
+    <p class="es">Dado que las señales se entregan de forma inmediata tras el pago y su valor informativo se consume en el momento de la visualización, <strong>no se ofrecen reembolsos</strong> una vez realizada la compra. Al adquirir acceso, el usuario acepta esta condición.</p>
+    <p class="en">Since signals are delivered immediately upon payment and their informational value is consumed upon viewing, <strong>no refunds are offered</strong> once a purchase is made. By purchasing access, the user accepts this condition.</p>
+  </section>
+
+  <!-- JURISDICCIÓN -->
+  <section>
+    <h2><span class="es">8. Jurisdicción y legislación aplicable</span><span class="en">8. Jurisdiction and applicable law</span></h2>
+    <p class="es">Este sitio web opera desde España. Cualquier disputa se someterá a la legislación española y a los tribunales competentes de la ciudad de residencia del autor.</p>
+    <p class="en">This website operates from Spain. Any dispute shall be subject to Spanish law and the competent courts of the author's city of residence.</p>
+  </section>
+
+  <div class="info-box">
+    <p class="es">Si tienes dudas sobre si el trading de criptomonedas es adecuado para tu situación financiera, consulta con un asesor financiero profesional antes de operar.</p>
+    <p class="en">If you have doubts about whether cryptocurrency trading is suitable for your financial situation, consult a professional financial advisor before trading.</p>
+  </div>
+
+  <div class="footer">
+    <span class="es">© 2026 The BTC Pulse · thebtcpulse.com</span>
+    <span class="en">© 2026 The BTC Pulse · thebtcpulse.com</span>
+  </div>
+</div>
+
+<script>
+function setLang(l){
+  document.body.className=l==='en'?'show-en':'show-es';
+  document.getElementById('btn-es').className=l==='es'?'active':'';
+  document.getElementById('btn-en').className=l==='en'?'active':'';
+}
+</script>
+</body>
+</html>
