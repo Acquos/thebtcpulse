@@ -1,0 +1,2 @@
+# thebtcpulse
+Bitcoin weekly direction
