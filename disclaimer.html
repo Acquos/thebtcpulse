@@ -7,152 +7,158 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
 <style>
-  :root{--bg:#fafafa;--card:#fff;--border:#e8e8e8;--text:#1a1a1a;--text2:#444;--text3:#888;--accent:#0891b2;--accent-bg:rgba(8,145,178,.05);--accent-bd:rgba(8,145,178,.15);--warn:#dc2626;--warn-bg:rgba(220,38,38,.04);--warn-bd:rgba(220,38,38,.15);}
-  .dark{--bg:#0a0a0f;--card:rgba(18,20,32,.9);--border:#1e2235;--text:#e2e8f0;--text2:#a0aec0;--text3:#5a6f8e;--accent:#06b6d4;--accent-bg:rgba(6,182,212,.06);--accent-bd:rgba(6,182,212,.2);--warn:#f87171;--warn-bg:rgba(248,113,113,.06);--warn-bd:rgba(248,113,113,.2);}
+  :root{
+    --bg:#fafafa;--card:#fff;--border:#e8e8e8;
+    --text:#1a1a1a;--text2:#444;--text3:#888;
+    --accent:#0891b2;--accent-bg:rgba(8,145,178,.05);--accent-bd:rgba(8,145,178,.15);
+    --warn:#dc2626;--warn-bg:rgba(220,38,38,.04);--warn-bd:rgba(220,38,38,.15);
+  }
+  @media(prefers-color-scheme:dark){
+    :root{
+      --bg:#0a0a0f;--card:rgba(18,20,32,.9);--border:#1e2235;
+      --text:#e2e8f0;--text2:#a0aec0;--text3:#5a6f8e;
+      --accent:#06b6d4;--accent-bg:rgba(6,182,212,.06);--accent-bd:rgba(6,182,212,.2);
+      --warn:#f87171;--warn-bg:rgba(248,113,113,.06);--warn-bd:rgba(248,113,113,.2);
+    }
+  }
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
   .wrap{max-width:640px;margin:0 auto;padding:3rem 1.5rem 4rem;}
-  .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;}
-  .back{display:inline-flex;align-items:center;gap:.4rem;color:var(--text3);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s;}.back:hover{color:var(--text);}
+  .back{display:inline-flex;align-items:center;gap:.4rem;color:var(--text3);text-decoration:none;font-size:.85rem;font-weight:500;margin-bottom:2rem;transition:color .2s;}
+  .back:hover{color:var(--text);}
   .back svg{width:16px;height:16px;}
-  .lang{display:flex;gap:.1rem;align-items:center;flex-wrap:wrap;margin-bottom:1.5rem;}
-  .lang button{background:none;border:none;font-family:'Inter',system-ui;font-size:.6rem;font-weight:500;color:var(--text3);cursor:pointer;padding:.25rem .35rem;border-radius:4px;transition:all .2s;-webkit-tap-highlight-color:transparent;}
-  .lang button.active{color:var(--text);background:var(--card);}.lang .sep{color:var(--text3);font-size:.55rem;}
-  .dark-toggle{background:none;border:1px solid var(--border);border-radius:20px;width:36px;height:20px;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent;transition:all .3s;}
-  .dark-toggle .knob{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--text3);transition:all .3s;}
-  .dark .dark-toggle{border-color:var(--text3);background:var(--text3);}.dark .dark-toggle .knob{left:18px;background:var(--bg);}
-  h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.8rem;margin-bottom:.3rem;}
+  h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.8rem;margin-bottom:.3rem;letter-spacing:-.02em;}
   .subtitle{color:var(--text3);font-size:.85rem;margin-bottom:2.5rem;}
+  .lang-toggle{display:inline-flex;gap:.5rem;margin-bottom:2rem;font-size:.8rem;}
+  .lang-toggle button{background:none;border:1px solid var(--border);color:var(--text3);padding:.3rem .7rem;border-radius:4px;cursor:pointer;font-family:inherit;font-weight:500;transition:all .2s;}
+  .lang-toggle button.active{background:var(--text);color:var(--bg);border-color:var(--text);}
+
   .warn-box{background:var(--warn-bg);border:1px solid var(--warn-bd);border-radius:10px;padding:1.2rem 1.4rem;margin-bottom:2rem;}
   .warn-box .icon{font-size:1.2rem;margin-bottom:.5rem;}
   .warn-box p{font-size:.9rem;font-weight:500;color:var(--warn);line-height:1.6;}
-  section{margin-bottom:2rem;}h2{font-size:1rem;font-weight:700;margin-bottom:.7rem;}
+
+  section{margin-bottom:2rem;}
+  h2{font-size:1rem;font-weight:700;margin-bottom:.7rem;letter-spacing:-.01em;}
   p{font-size:.9rem;color:var(--text2);margin-bottom:.8rem;}
-  .info-box{background:var(--accent-bg);border:1px solid var(--accent-bd);border-radius:10px;padding:1.2rem 1.4rem;margin:2rem 0;}.info-box p{color:var(--accent);font-size:.88rem;font-weight:500;margin:0;}
+  ul{margin:.5rem 0 1rem 1.2rem;font-size:.88rem;color:var(--text2);}
+  ul li{margin-bottom:.4rem;}
+
+  .info-box{background:var(--accent-bg);border:1px solid var(--accent-bd);border-radius:10px;padding:1.2rem 1.4rem;margin:2rem 0;}
+  .info-box p{color:var(--accent);font-size:.88rem;font-weight:500;margin:0;}
+
   .footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);color:var(--text3);font-size:.78rem;text-align:center;}
-  [data-lang]{display:none;}.active-lang{display:block!important;}
+
+  .es,.en{display:none;}
+  .show-es .es{display:block;}
+  .show-en .en{display:block;}
 </style>
 </head>
-<body>
+<body class="show-es">
 <div class="wrap">
-  <div class="topbar">
-    <a href="index.html" class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> <span data-lang="es">Volver</span><span data-lang="en">Back</span><span data-lang="fr">Retour</span><span data-lang="pt">Voltar</span><span data-lang="it">Indietro</span><span data-lang="de">Zurück</span><span data-lang="zh">返回</span><span data-lang="ja">戻る</span></a>
-    <button class="dark-toggle" onclick="document.body.classList.toggle('dark')" aria-label="Dark mode"><div class="knob"></div></button>
+  <a href="index.html" class="back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> <span class="es">Volver</span><span class="en">Back</span></a>
+
+  <div class="lang-toggle">
+    <button class="active" id="btn-es" onclick="setLang('es')">ES</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
   </div>
-  <div class="lang">
-    <button class="active" id="btn-es" onclick="setLang('es')">ES</button><span class="sep">·</span><button id="btn-en" onclick="setLang('en')">EN</button><span class="sep">·</span><button id="btn-fr" onclick="setLang('fr')">FR</button><span class="sep">·</span><button id="btn-pt" onclick="setLang('pt')">PT</button><span class="sep">·</span><button id="btn-it" onclick="setLang('it')">IT</button><span class="sep">·</span><button id="btn-de" onclick="setLang('de')">DE</button><span class="sep">·</span><button id="btn-zh" onclick="setLang('zh')">中文</button><span class="sep">·</span><button id="btn-ja" onclick="setLang('ja')">日本語</button>
+
+  <h1><span class="es">Aviso Legal</span><span class="en">Legal Disclaimer</span></h1>
+  <div class="subtitle"><span class="es">Última actualización: abril 2026</span><span class="en">Last updated: April 2026</span></div>
+
+  <!-- ADVERTENCIA PRINCIPAL -->
+  <div class="warn-box">
+    <div class="icon">⚠️</div>
+    <p class="es">Este sitio web NO proporciona asesoramiento financiero, de inversión ni de trading. La información presentada es de carácter exclusivamente informativo y experimental.</p>
+    <p class="en">This website does NOT provide financial, investment, or trading advice. The information presented is for informational and experimental purposes only.</p>
   </div>
-  <h1><span data-lang="es">Aviso Legal</span><span data-lang="en">Legal Disclaimer</span><span data-lang="fr">Mentions Légales</span><span data-lang="pt">Aviso Legal</span><span data-lang="it">Avviso Legale</span><span data-lang="de">Rechtlicher Hinweis</span><span data-lang="zh">法律声明</span><span data-lang="ja">免責事項</span></h1>
-  <div class="subtitle"><span data-lang="es">Última actualización: abril 2026</span><span data-lang="en">Last updated: April 2026</span><span data-lang="fr">Dernière mise à jour : avril 2026</span><span data-lang="pt">Última atualização: abril 2026</span><span data-lang="it">Ultimo aggiornamento: aprile 2026</span><span data-lang="de">Letzte Aktualisierung: April 2026</span><span data-lang="zh">最后更新：2026年4月</span><span data-lang="ja">最終更新：2026年4月</span></div>
-  <div class="warn-box"><div class="icon">⚠️</div>
-    <p data-lang="es">Este sitio web NO proporciona asesoramiento financiero, de inversión ni de trading. La información es exclusivamente informativa y experimental.</p>
-    <p data-lang="en">This website does NOT provide financial, investment, or trading advice. The information is for informational and experimental purposes only.</p>
-    <p data-lang="fr">Ce site web NE fournit PAS de conseils financiers, d'investissement ou de trading. Les informations sont à titre informatif et expérimental uniquement.</p>
-    <p data-lang="pt">Este site NÃO fornece consultoria financeira, de investimento ou de trading. As informações são exclusivamente informativas e experimentais.</p>
-    <p data-lang="it">Questo sito NON fornisce consulenza finanziaria, di investimento o di trading. Le informazioni sono esclusivamente a scopo informativo e sperimentale.</p>
-    <p data-lang="de">Diese Website bietet KEINE Finanz-, Anlage- oder Handelsberatung. Die Informationen dienen ausschließlich zu Informations- und Versuchszwecken.</p>
-    <p data-lang="zh">本网站不提供任何财务、投资或交易建议。所提供的信息仅供参考和实验目的。</p>
-    <p data-lang="ja">このウェブサイトは金融、投資、取引に関するアドバイスを提供しません。情報は情報提供および実験目的のみです。</p>
-  </div>
-  <section><h2><span data-lang="es">1. Naturaleza del servicio</span><span data-lang="en">1. Nature of the service</span><span data-lang="fr">1. Nature du service</span><span data-lang="pt">1. Natureza do serviço</span><span data-lang="it">1. Natura del servizio</span><span data-lang="de">1. Art des Dienstes</span><span data-lang="zh">1. 服务性质</span><span data-lang="ja">1. サービスの性質</span></h2>
-    <p data-lang="es">The BTC Pulse es un proyecto experimental que muestra señales direccionales semanales para Bitcoin basadas en datos macroeconómicos públicos.</p>
-    <p data-lang="en">The BTC Pulse is an experimental project displaying weekly directional signals for Bitcoin based on public macroeconomic data.</p>
-    <p data-lang="fr">The BTC Pulse est un projet expérimental affichant des signaux directionnels hebdomadaires pour Bitcoin basés sur des données macroéconomiques publiques.</p>
-    <p data-lang="pt">The BTC Pulse é um projeto experimental que exibe sinais direcionais semanais para Bitcoin com base em dados macroeconômicos públicos.</p>
-    <p data-lang="it">The BTC Pulse è un progetto sperimentale che mostra segnali direzionali settimanali per Bitcoin basati su dati macroeconomici pubblici.</p>
-    <p data-lang="de">The BTC Pulse ist ein experimentelles Projekt, das wöchentliche Richtungssignale für Bitcoin basierend auf öffentlichen makroökonomischen Daten anzeigt.</p>
-    <p data-lang="zh">The BTC Pulse 是一个实验性项目，基于公共宏观经济数据显示比特币的每周方向信号。</p>
-    <p data-lang="ja">The BTC Pulseは公開マクロ経済データに基づくビットコインの週間方向性シグナルを表示する実験的プロジェクトです。</p>
+
+  <!-- NATURALEZA DEL SERVICIO -->
+  <section>
+    <h2><span class="es">1. Naturaleza del servicio</span><span class="en">1. Nature of the service</span></h2>
+    <p class="es">The BTC Pulse es un proyecto experimental que muestra señales direccionales semanales para Bitcoin basadas en el análisis de datos macroeconómicos públicos.</p>
+    <p class="en">The BTC Pulse is an experimental project that displays weekly directional signals for Bitcoin based on the analysis of public macroeconomic data.</p>
   </section>
-  <section><h2><span data-lang="es">2. Esto no es asesoramiento financiero</span><span data-lang="en">2. This is not financial advice</span><span data-lang="fr">2. Ceci n'est pas un conseil financier</span><span data-lang="pt">2. Isto não é consultoria financeira</span><span data-lang="it">2. Questo non è consulenza finanziaria</span><span data-lang="de">2. Dies ist keine Finanzberatung</span><span data-lang="zh">2. 这不是财务建议</span><span data-lang="ja">2. これは財務アドバイスではありません</span></h2>
-    <p data-lang="es">El autor <strong>no es un asesor financiero registrado</strong> ni posee licencia para ofrecer servicios de asesoramiento financiero.</p>
-    <p data-lang="en">The author is <strong>not a registered financial advisor</strong> and holds no license to provide financial advisory services.</p>
-    <p data-lang="fr">L'auteur <strong>n'est pas un conseiller financier agréé</strong> et ne détient aucune licence pour offrir des services de conseil financier.</p>
-    <p data-lang="pt">O autor <strong>não é um consultor financeiro registrado</strong> e não possui licença para oferecer serviços de consultoria financeira.</p>
-    <p data-lang="it">L'autore <strong>non è un consulente finanziario registrato</strong> e non possiede licenza per offrire servizi di consulenza finanziaria.</p>
-    <p data-lang="de">Der Autor ist <strong>kein registrierter Finanzberater</strong> und besitzt keine Lizenz zur Erbringung von Finanzberatungsdienstleistungen.</p>
-    <p data-lang="zh">作者<strong>不是注册财务顾问</strong>，也不持有提供财务咨询服务的许可证。</p>
-    <p data-lang="ja">著者は<strong>登録された金融アドバイザーではなく</strong>、金融アドバイザリーサービスのライセンスを保有していません。</p>
+
+  <!-- NO ES ASESORAMIENTO -->
+  <section>
+    <h2><span class="es">2. Esto no es asesoramiento financiero</span><span class="en">2. This is not financial advice</span></h2>
+    <p class="es">La información ofrecida en este sitio web:</p>
+    <p class="en">The information provided on this website:</p>
+    <ul>
+      <li class="es">No constituye asesoramiento financiero, de inversión ni de trading.</li>
+      <li class="en">Does not constitute financial, investment, or trading advice.</li>
+      <li class="es">No es una recomendación de compra, venta ni mantenimiento de ningún activo financiero.</li>
+      <li class="en">Is not a recommendation to buy, sell, or hold any financial asset.</li>
+      <li class="es">No debe utilizarse como única base para tomar decisiones financieras.</li>
+      <li class="en">Should not be used as the sole basis for making financial decisions.</li>
+      <li class="es">No sustituye el asesoramiento profesional de un asesor financiero registrado.</li>
+      <li class="en">Does not replace professional advice from a registered financial advisor.</li>
+    </ul>
+    <p class="es">El autor de este sitio <strong>no es un asesor financiero registrado</strong> ni posee ninguna licencia o certificación para ofrecer servicios de asesoramiento financiero.</p>
+    <p class="en">The author of this website is <strong>not a registered financial advisor</strong> and does not hold any license or certification to provide financial advisory services.</p>
   </section>
-  <section><h2><span data-lang="es">3. Riesgo y responsabilidad</span><span data-lang="en">3. Risk and liability</span><span data-lang="fr">3. Risque et responsabilité</span><span data-lang="pt">3. Risco e responsabilidade</span><span data-lang="it">3. Rischio e responsabilità</span><span data-lang="de">3. Risiko und Haftung</span><span data-lang="zh">3. 风险与责任</span><span data-lang="ja">3. リスクと責任</span></h2>
-    <p data-lang="es">El trading de criptomonedas conlleva un <strong>riesgo elevado de pérdida de capital</strong>. El apalancamiento multiplica ganancias y pérdidas. Cualquier decisión es <strong>bajo tu exclusiva responsabilidad</strong>.</p>
-    <p data-lang="en">Cryptocurrency trading carries a <strong>high risk of capital loss</strong>. Leverage multiplies gains and losses. Any decision is <strong>at your own risk</strong>.</p>
-    <p data-lang="fr">Le trading de cryptomonnaies comporte un <strong>risque élevé de perte en capital</strong>. L'effet de levier multiplie gains et pertes. Toute décision est <strong>sous votre entière responsabilité</strong>.</p>
-    <p data-lang="pt">O trading de criptomoedas envolve um <strong>alto risco de perda de capital</strong>. A alavancagem multiplica ganhos e perdas. Qualquer decisão é de <strong>sua exclusiva responsabilidade</strong>.</p>
-    <p data-lang="it">Il trading di criptovalute comporta un <strong>elevato rischio di perdita di capitale</strong>. La leva moltiplica guadagni e perdite. Qualsiasi decisione è <strong>sotto la tua esclusiva responsabilità</strong>.</p>
-    <p data-lang="de">Kryptowährungshandel birgt ein <strong>hohes Risiko des Kapitalverlusts</strong>. Hebelwirkung vervielfacht Gewinne und Verluste. Jede Entscheidung erfolgt <strong>auf eigenes Risiko</strong>.</p>
-    <p data-lang="zh">加密货币交易存在<strong>较高的资本损失风险</strong>。杠杆放大收益和损失。任何决定均<strong>由您自行承担风险</strong>。</p>
-    <p data-lang="ja">暗号通貨取引には<strong>高い資本損失リスク</strong>が伴います。レバレッジは利益と損失を倍増させます。すべての決定は<strong>自己責任</strong>です。</p>
+
+  <!-- RIESGO -->
+  <section>
+    <h2><span class="es">3. Riesgo y responsabilidad</span><span class="en">3. Risk and liability</span></h2>
+    <p class="es">El trading de criptomonedas y derivados financieros conlleva un <strong>riesgo elevado de pérdida de capital</strong>, incluyendo la posibilidad de perder la totalidad de la inversión. El uso de apalancamiento multiplica tanto las ganancias como las pérdidas potenciales.</p>
+    <p class="en">Cryptocurrency and financial derivatives trading carries a <strong>high risk of capital loss</strong>, including the possibility of losing the entire investment. The use of leverage multiplies both potential gains and losses.</p>
+    <p class="es">Cualquier decisión que tomes basándote en la información de este sitio es <strong>bajo tu exclusiva responsabilidad</strong>. El autor no será responsable de ninguna pérdida o daño derivado del uso de esta información.</p>
+    <p class="en">Any decision you make based on the information on this website is <strong>at your own risk</strong>. The author shall not be liable for any loss or damage arising from the use of this information.</p>
   </section>
-  <section><h2><span data-lang="es">4. Resultados pasados</span><span data-lang="en">4. Past performance</span><span data-lang="fr">4. Performances passées</span><span data-lang="pt">4. Resultados passados</span><span data-lang="it">4. Risultati passati</span><span data-lang="de">4. Vergangene Ergebnisse</span><span data-lang="zh">4. 过往业绩</span><span data-lang="ja">4. 過去の実績</span></h2>
-    <p data-lang="es">Los resultados históricos <strong>no garantizan resultados futuros</strong>. Las condiciones de mercado cambian constantemente.</p>
-    <p data-lang="en">Historical results <strong>do not guarantee future results</strong>. Market conditions change constantly.</p>
-    <p data-lang="fr">Les résultats historiques <strong>ne garantissent pas les résultats futurs</strong>. Les conditions du marché changent constamment.</p>
-    <p data-lang="pt">Resultados históricos <strong>não garantem resultados futuros</strong>. As condições de mercado mudam constantemente.</p>
-    <p data-lang="it">I risultati storici <strong>non garantiscono risultati futuri</strong>. Le condizioni di mercato cambiano costantemente.</p>
-    <p data-lang="de">Historische Ergebnisse <strong>garantieren keine zukünftigen Ergebnisse</strong>. Marktbedingungen ändern sich ständig.</p>
-    <p data-lang="zh">历史结果<strong>不保证未来结果</strong>。市场条件不断变化。</p>
-    <p data-lang="ja">過去の実績は<strong>将来の結果を保証しません</strong>。市場環境は常に変化します。</p>
+
+  <!-- RESULTADOS PASADOS -->
+  <section>
+    <h2><span class="es">4. Resultados pasados</span><span class="en">4. Past performance</span></h2>
+    <p class="es">Los resultados históricos mostrados en este sitio (targets alcanzados, historial de señales) <strong>no garantizan resultados futuros</strong>. El rendimiento pasado de cualquier sistema de trading no es indicativo de rendimientos futuros. Las condiciones de mercado cambian y un sistema que ha funcionado en el pasado puede dejar de hacerlo.</p>
+    <p class="en">Historical results shown on this website (targets hit, signal history) <strong>do not guarantee future results</strong>. Past performance of any trading system is not indicative of future returns. Market conditions change and a system that has worked in the past may cease to do so.</p>
   </section>
-  <section><h2><span data-lang="es">5. Sistema experimental</span><span data-lang="en">5. Experimental system</span><span data-lang="fr">5. Système expérimental</span><span data-lang="pt">5. Sistema experimental</span><span data-lang="it">5. Sistema sperimentale</span><span data-lang="de">5. Experimentelles System</span><span data-lang="zh">5. 实验系统</span><span data-lang="ja">5. 実験的システム</span></h2>
-    <p data-lang="es">La metodología puede ser incorrecta, incompleta o dejar de ser válida en cualquier momento.</p>
-    <p data-lang="en">The methodology may be incorrect, incomplete, or may cease to be valid at any time.</p>
-    <p data-lang="fr">La méthodologie peut être incorrecte, incomplète ou cesser d'être valide à tout moment.</p>
-    <p data-lang="pt">A metodologia pode estar incorreta, incompleta ou deixar de ser válida a qualquer momento.</p>
-    <p data-lang="it">La metodologia può essere errata, incompleta o cessare di essere valida in qualsiasi momento.</p>
-    <p data-lang="de">Die Methodik kann fehlerhaft, unvollständig sein oder jederzeit ihre Gültigkeit verlieren.</p>
-    <p data-lang="zh">该方法可能不正确、不完整，或可能随时失效。</p>
-    <p data-lang="ja">手法は不正確、不完全である可能性があり、いつでも無効になる可能性があります。</p>
+
+  <!-- SISTEMA EXPERIMENTAL -->
+  <section>
+    <h2><span class="es">5. Sistema experimental</span><span class="en">5. Experimental system</span></h2>
+    <p class="es">The BTC Pulse es un proyecto personal y experimental. La metodología está basada en una tesis macroeconómica propia. Esta tesis, como cualquier modelo, puede ser incorrecta, incompleta o dejar de ser válida en cualquier momento.</p>
+    <p class="en">The BTC Pulse is a personal and experimental project. The methodology is based on a proprietary macroeconomic thesis. This thesis, like any model, may be incorrect, incomplete, or may cease to be valid at any time.</p>
   </section>
-  <section><h2><span data-lang="es">6. Datos de terceros</span><span data-lang="en">6. Third-party data</span><span data-lang="fr">6. Données tierces</span><span data-lang="pt">6. Dados de terceiros</span><span data-lang="it">6. Dati di terze parti</span><span data-lang="de">6. Daten Dritter</span><span data-lang="zh">6. 第三方数据</span><span data-lang="ja">6. サードパーティデータ</span></h2>
-    <p data-lang="es">No se garantiza que los datos sean correctos, completos o estén actualizados en todo momento.</p>
-    <p data-lang="en">There is no guarantee that data is correct, complete, or up to date at all times.</p>
-    <p data-lang="fr">Il n'est pas garanti que les données soient correctes, complètes ou à jour en permanence.</p>
-    <p data-lang="pt">Não há garantia de que os dados estejam corretos, completos ou atualizados em todos os momentos.</p>
-    <p data-lang="it">Non si garantisce che i dati siano corretti, completi o aggiornati in ogni momento.</p>
-    <p data-lang="de">Es wird nicht garantiert, dass die Daten jederzeit korrekt, vollständig oder aktuell sind.</p>
-    <p data-lang="zh">不保证数据始终正确、完整或最新。</p>
-    <p data-lang="ja">データが常に正確、完全、最新であることは保証されません。</p>
+
+  <!-- DATOS DE TERCEROS -->
+  <section>
+    <h2><span class="es">6. Datos de terceros</span><span class="en">6. Third-party data</span></h2>
+    <p class="es">Este sitio utiliza datos de fuentes públicas. Aunque se hace un esfuerzo por mantener la precisión, no se garantiza que los datos sean correctos, completos o estén actualizados en todo momento. Los errores en las fuentes de datos podrían resultar en señales incorrectas.</p>
+    <p class="en">This website uses data from public sources. While efforts are made to maintain accuracy, there is no guarantee that data is correct, complete, or up to date at all times. Errors in data sources could result in incorrect signals.</p>
   </section>
-  <section><h2><span data-lang="es">7. Reembolsos</span><span data-lang="en">7. Refunds</span><span data-lang="fr">7. Remboursements</span><span data-lang="pt">7. Reembolsos</span><span data-lang="it">7. Rimborsi</span><span data-lang="de">7. Rückerstattungen</span><span data-lang="zh">7. 退款</span><span data-lang="ja">7. 返金</span></h2>
-    <p data-lang="es"><strong>No se ofrecen reembolsos</strong> una vez realizada la compra.</p>
-    <p data-lang="en"><strong>No refunds</strong> once a purchase is made.</p>
-    <p data-lang="fr"><strong>Aucun remboursement</strong> une fois l'achat effectué.</p>
-    <p data-lang="pt"><strong>Não são oferecidos reembolsos</strong> após a compra.</p>
-    <p data-lang="it"><strong>Non sono previsti rimborsi</strong> una volta effettuato l'acquisto.</p>
-    <p data-lang="de"><strong>Rückerstattungen sind nicht möglich</strong> nach dem Kauf.</p>
-    <p data-lang="zh">购买完成后<strong>不提供退款</strong>。</p>
-    <p data-lang="ja">購入後の<strong>返金はできません</strong>。</p>
+
+  <!-- REEMBOLSOS -->
+  <section>
+    <h2><span class="es">7. Política de reembolsos</span><span class="en">7. Refund policy</span></h2>
+    <p class="es">Dado que las señales se entregan de forma inmediata tras el pago y su valor informativo se consume en el momento de la visualización, <strong>no se ofrecen reembolsos</strong> una vez realizada la compra. Al adquirir acceso, el usuario acepta esta condición.</p>
+    <p class="en">Since signals are delivered immediately upon payment and their informational value is consumed upon viewing, <strong>no refunds are offered</strong> once a purchase is made. By purchasing access, the user accepts this condition.</p>
   </section>
-  <section><h2><span data-lang="es">8. Jurisdicción</span><span data-lang="en">8. Jurisdiction</span><span data-lang="fr">8. Juridiction</span><span data-lang="pt">8. Jurisdição</span><span data-lang="it">8. Giurisdizione</span><span data-lang="de">8. Gerichtsstand</span><span data-lang="zh">8. 管辖权</span><span data-lang="ja">8. 管轄</span></h2>
-    <p data-lang="es">Este sitio opera desde España. Cualquier disputa se someterá a la legislación española.</p>
-    <p data-lang="en">This website operates from Spain. Any dispute shall be subject to Spanish law.</p>
-    <p data-lang="fr">Ce site opère depuis l'Espagne. Tout litige sera soumis au droit espagnol.</p>
-    <p data-lang="pt">Este site opera a partir da Espanha. Qualquer disputa estará sujeita à legislação espanhola.</p>
-    <p data-lang="it">Questo sito opera dalla Spagna. Qualsiasi controversia sarà soggetta alla legge spagnola.</p>
-    <p data-lang="de">Diese Website wird von Spanien aus betrieben. Streitigkeiten unterliegen dem spanischen Recht.</p>
-    <p data-lang="zh">本网站从西班牙运营。任何争议均受西班牙法律管辖。</p>
-    <p data-lang="ja">このウェブサイトはスペインから運営されています。紛争はスペイン法に準拠します。</p>
+
+  <!-- JURISDICCIÓN -->
+  <section>
+    <h2><span class="es">8. Jurisdicción y legislación aplicable</span><span class="en">8. Jurisdiction and applicable law</span></h2>
+    <p class="es">Este sitio web opera desde España. Cualquier disputa se someterá a la legislación española y a los tribunales competentes de la ciudad de residencia del autor.</p>
+    <p class="en">This website operates from Spain. Any dispute shall be subject to Spanish law and the competent courts of the author's city of residence.</p>
   </section>
+
   <div class="info-box">
-    <p data-lang="es">Si tienes dudas, consulta con un asesor financiero profesional antes de operar.</p>
-    <p data-lang="en">If in doubt, consult a professional financial advisor before trading.</p>
-    <p data-lang="fr">En cas de doute, consultez un conseiller financier professionnel avant de trader.</p>
-    <p data-lang="pt">Em caso de dúvida, consulte um consultor financeiro profissional antes de operar.</p>
-    <p data-lang="it">In caso di dubbi, consulta un consulente finanziario professionista prima di operare.</p>
-    <p data-lang="de">Im Zweifelsfall konsultieren Sie einen professionellen Finanzberater bevor Sie handeln.</p>
-    <p data-lang="zh">如有疑问，请在交易前咨询专业财务顾问。</p>
-    <p data-lang="ja">疑問がある場合は、取引前に専門のファイナンシャルアドバイザーにご相談ください。</p>
+    <p class="es">Si tienes dudas sobre si el trading de criptomonedas es adecuado para tu situación financiera, consulta con un asesor financiero profesional antes de operar.</p>
+    <p class="en">If you have doubts about whether cryptocurrency trading is suitable for your financial situation, consult a professional financial advisor before trading.</p>
   </div>
-  <div class="footer">© 2026 The BTC Pulse · thebtcpulse.com</div>
+
+  <div class="footer">
+    <span class="es">© 2026 The BTC Pulse · thebtcpulse.com</span>
+    <span class="en">© 2026 The BTC Pulse · thebtcpulse.com</span>
+  </div>
 </div>
+
 <script>
-const LANGS=["es","en","fr","pt","it","de","zh","ja"];
 function setLang(l){
-  LANGS.forEach(k=>document.getElementById("btn-"+k).className=k===l?"active":"");
-  document.querySelectorAll("[data-lang]").forEach(el=>{el.classList.toggle("active-lang",el.dataset.lang===l);});
+  document.body.className=l==='en'?'show-en':'show-es';
+  document.getElementById('btn-es').className=l==='es'?'active':'';
+  document.getElementById('btn-en').className=l==='en'?'active':'';
 }
-setLang("es");
 </script>
 </body>
 </html>
