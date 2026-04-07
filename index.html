@@ -166,7 +166,8 @@
 <link rel="preconnect" href="https://s3.tradingview.com">
 <link rel="dns-prefetch" href="https://api.binance.com">
 <link rel="dns-prefetch" href="https://s3.tradingview.com">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet"></noscript>
 <style>
 :root{
   --bg:#f5f3f0;--card:rgba(255,255,255,.85);--border:rgba(0,0,0,.08);--border2:rgba(0,0,0,.05);
@@ -236,6 +237,12 @@ body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xm
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
 
 #result{display:none;}#result.show{display:block;}
+.how-it-works{margin-bottom:2rem;border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all .3s;}
+.how-it-works summary{padding:.8rem 1.1rem;font-size:.55rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);cursor:pointer;list-style:none;display:flex;align-items:center;gap:.4rem;-webkit-tap-highlight-color:transparent;}
+.how-it-works summary::before{content:'▸';font-size:.6rem;transition:transform .2s;}
+.how-it-works[open] summary::before{transform:rotate(90deg);}
+.how-it-works summary::-webkit-details-marker{display:none;}
+.how-body{padding:0 1.1rem 1rem;font-size:.75rem;color:var(--text2);line-height:1.7;}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
 .anim{animation:fadeUp .6s cubic-bezier(.22,1,.36,1) both;}.d1{animation-delay:.1s;}.d2{animation-delay:.18s;}.d3{animation-delay:.26s;}.d4{animation-delay:.34s;}.d5{animation-delay:.42s;}
@@ -288,6 +295,10 @@ h2{font-size:inherit;font-weight:inherit;margin:0;}
 .hist-tp .price{font-size:.58rem;font-weight:600;color:var(--text2);line-height:1.3;}.hist-tp .status{font-size:.48rem;font-weight:600;margin-top:.08rem;}
 .hit{color:var(--green);}.miss{color:var(--red);opacity:.6;}.pend{color:var(--text5);font-style:italic;}
 .legal-footer{text-align:center;padding:2rem 0 1rem;}
+.share-row{display:flex;align-items:center;gap:.5rem;margin-top:1rem;}
+.share-label{font-size:.45rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text4);}
+.share-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--card);font-size:.75rem;text-decoration:none;color:var(--text2);transition:all .25s;box-shadow:0 1px 3px rgba(0,0,0,.04);}
+.share-btn:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(0,0,0,.08);border-color:var(--btc);color:var(--btc);}
 .legal-footer a{color:var(--text4);text-decoration:none;font-size:.7rem;font-weight:400;letter-spacing:.03em;transition:color .25s;}
 .legal-footer a:hover{color:var(--btc);}
 </style>
@@ -298,6 +309,11 @@ h2{font-size:inherit;font-weight:inherit;margin:0;}
   <header class="topbar"><div class="lang"><button class="active" id="btn-es" onclick="setLang('es')">ES</button><span class="sep">/</span><button id="btn-en" onclick="setLang('en')">EN</button><span class="sep">/</span><button id="btn-de" onclick="setLang('de')">DE</button><span class="sep">/</span><button id="btn-pt" onclick="setLang('pt')">PT</button><span class="sep">/</span><button id="btn-it" onclick="setLang('it')">IT</button><span class="sep">/</span><button id="btn-fr" onclick="setLang('fr')">FR</button><span class="sep">/</span><button id="btn-zh" onclick="setLang('zh')">中</button><span class="sep">/</span><button id="btn-ja" onclick="setLang('ja')">日</button></div><button class="dark-toggle" onclick="toggleDark()" aria-label="Dark mode"><div class="knob"></div></button></header>
   <div class="header"><h1><span class="the">The</span>BTC Pulse</h1><div class="domain">thebtcpulse.com</div></div>
   <div class="live-price"><div class="live-label"><span class="live-dot"></span><span id="lbl-live">BTC en tiempo real</span></div><div class="live-row"><div class="live-val" id="live-val">—</div><div class="live-change" id="live-change"></div></div></div>
+
+  <details class="how-it-works">
+    <summary id="how-title">¿Cómo funciona?</summary>
+    <div class="how-body" id="how-body">Cada semana analizamos datos macroeconómicos públicos para generar una señal direccional de Bitcoin (alcista o bajista) con 4 niveles de precio objetivo. Sin registro, sin spam — solo datos.</div>
+  </details>
 
   <div id="result">
     <div class="arrow-area anim" id="arrow-area"></div>
@@ -311,6 +327,11 @@ h2{font-size:inherit;font-weight:inherit;margin:0;}
     </div>
     <div class="foot-time" id="r-time"></div>
     <div class="disclaimer" id="disclaimer-txt">Análisis basado en indicadores macro de liquidez.<br>No constituye asesoramiento financiero.</div>
+    <div class="share-row" id="share-row">
+      <span class="share-label" id="share-label">Compartir</span>
+      <a class="share-btn share-x" id="share-x" href="#" target="_blank" rel="noopener" aria-label="Share on X">𝕏</a>
+      <a class="share-btn share-wa" id="share-wa" href="#" target="_blank" rel="noopener" aria-label="Share on WhatsApp">💬</a>
+    </div>
   </div>
   <section class="chart-section" aria-label="Bitcoin chart">
     <h2 class="chart-title" id="chart-title-txt">Gráfico semanal</h2>
@@ -343,17 +364,17 @@ if(localStorage.getItem("btcpulse_dark")==="1")document.body.classList.add("dark
 /* i18n */
 const LANGS=["es","en","de","pt","it","fr","zh","ja"];
 const L={
-  es:{week_bull:"SEMANA ALCISTA",week_bear:"SEMANA BAJISTA",week_neut:"SIN SEÑAL",entry:"Precio de entrada",signal:"Señal",t1:"Conservador",t2:"Equilibrado",t3:"Ambicioso",t4:"Visionario",main:"Principal",hit:"✓ ALCANZADO",miss:"✗ NO ALCANZADO",pend:"⏳ PENDIENTE",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Semanas anteriores",date:"Fecha",disclaimer:"Análisis basado en indicadores macro de liquidez.<br>No constituye asesoramiento financiero.",from_entry:"desde entrada",live:"BTC en tiempo real",ht1:"Cons.",ht2:"Equil.",ht3:"Ambic.",ht4:"Vision.",streak_txt:"acierto en Target y/o Dirección",chart:"Gráfico semanal",hdir:"Dir.",week_to:"a",legal:"⚖️ Aviso Legal",targets_title:"Objetivo semanal",locale:"es-ES"},
-  en:{week_bull:"BULLISH WEEK",week_bear:"BEARISH WEEK",week_neut:"NO SIGNAL",entry:"Entry price",signal:"Signal",t1:"Conservative",t2:"Balanced",t3:"Ambitious",t4:"Visionary",main:"Main target",hit:"✓ REACHED",miss:"✗ NOT REACHED",pend:"⏳ PENDING",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Previous weeks",date:"Date",disclaimer:"Analysis based on macro liquidity indicators.<br>Not financial advice.",from_entry:"from entry",live:"BTC live price",ht1:"Cons.",ht2:"Bal.",ht3:"Amb.",ht4:"Vision.",streak_txt:"Target and/or Direction accuracy",chart:"Weekly chart",hdir:"Dir.",week_to:"to",legal:"⚖️ Legal Disclaimer",targets_title:"Weekly target",locale:"en-US"},
-  de:{week_bull:"BULLISCHE WOCHE",week_bear:"BÄRISCHE WOCHE",week_neut:"KEIN SIGNAL",entry:"Einstiegspreis",signal:"Signal",t1:"Konservativ",t2:"Ausgewogen",t3:"Ambitioniert",t4:"Visionär",main:"Hauptziel",hit:"✓ ERREICHT",miss:"✗ NICHT ERREICHT",pend:"⏳ AUSSTEHEND",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Vorherige Wochen",date:"Datum",disclaimer:"Analyse basiert auf Makro-Liquiditätsindikatoren.<br>Keine Finanzberatung.",from_entry:"ab Einstieg",live:"BTC Echtzeitpreis",ht1:"Kons.",ht2:"Ausg.",ht3:"Amb.",ht4:"Vision.",streak_txt:"Trefferquote Target und/oder Richtung",chart:"Wochenchart",hdir:"Richt.",week_to:"bis",legal:"⚖️ Rechtlicher Hinweis",targets_title:"Wochenziel",locale:"de-DE"},
-  pt:{week_bull:"SEMANA ALTISTA",week_bear:"SEMANA BAIXISTA",week_neut:"SEM SINAL",entry:"Preço de entrada",signal:"Sinal",t1:"Conservador",t2:"Equilibrado",t3:"Ambicioso",t4:"Visionário",main:"Principal",hit:"✓ ALCANÇADO",miss:"✗ NÃO ALCANÇADO",pend:"⏳ PENDENTE",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Semanas anteriores",date:"Data",disclaimer:"Análise baseada em indicadores macro de liquidez.<br>Não constitui aconselhamento financeiro.",from_entry:"da entrada",live:"BTC preço ao vivo",ht1:"Cons.",ht2:"Equil.",ht3:"Amb.",ht4:"Vision.",streak_txt:"acerto em Target e/ou Direção",chart:"Gráfico semanal",hdir:"Dir.",week_to:"a",legal:"⚖️ Aviso Legal",targets_title:"Objetivo semanal",locale:"pt-BR"},
-  it:{week_bull:"SETTIMANA RIALZISTA",week_bear:"SETTIMANA RIBASSISTA",week_neut:"NESSUN SEGNALE",entry:"Prezzo di ingresso",signal:"Segnale",t1:"Conservativo",t2:"Equilibrato",t3:"Ambizioso",t4:"Visionario",main:"Principale",hit:"✓ RAGGIUNTO",miss:"✗ NON RAGGIUNTO",pend:"⏳ IN ATTESA",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Settimane precedenti",date:"Data",disclaimer:"Analisi basata su indicatori macro di liquidità.<br>Non costituisce consulenza finanziaria.",from_entry:"dall'ingresso",live:"BTC prezzo live",ht1:"Cons.",ht2:"Equil.",ht3:"Amb.",ht4:"Vision.",streak_txt:"precisione Target e/o Direzione",chart:"Grafico settimanale",hdir:"Dir.",week_to:"a",legal:"⚖️ Avviso Legale",targets_title:"Obiettivo settimanale",locale:"it-IT"},
-  fr:{week_bull:"SEMAINE HAUSSIÈRE",week_bear:"SEMAINE BAISSIÈRE",week_neut:"AUCUN SIGNAL",entry:"Prix d'entrée",signal:"Signal",t1:"Conservateur",t2:"Équilibré",t3:"Ambitieux",t4:"Visionnaire",main:"Principal",hit:"✓ ATTEINT",miss:"✗ NON ATTEINT",pend:"⏳ EN ATTENTE",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Semaines précédentes",date:"Date",disclaimer:"Analyse basée sur des indicateurs macro de liquidité.<br>Ne constitue pas un conseil financier.",from_entry:"depuis l'entrée",live:"BTC prix en direct",ht1:"Cons.",ht2:"Équil.",ht3:"Amb.",ht4:"Vision.",streak_txt:"précision Target et/ou Direction",chart:"Graphique hebdomadaire",hdir:"Dir.",week_to:"au",legal:"⚖️ Mentions Légales",targets_title:"Objectif hebdomadaire",locale:"fr-FR"},
-  zh:{week_bull:"看涨周",week_bear:"看跌周",week_neut:"无信号",entry:"入场价格",signal:"信号",t1:"保守型",t2:"平衡型",t3:"进取型",t4:"远见型",main:"主要目标",hit:"✓ 已达到",miss:"✗ 未达到",pend:"⏳ 待定",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"前几周",date:"日期",disclaimer:"基于宏观流动性指标的分析。<br>不构成财务建议。",from_entry:"距入场",live:"BTC 实时价格",ht1:"保守",ht2:"平衡",ht3:"进取",ht4:"远见",streak_txt:"目标和/或方向命中率",chart:"周线图",hdir:"方向",week_to:"至",legal:"⚖️ 法律声明",targets_title:"每周目标",locale:"zh-CN"},
-  ja:{week_bull:"強気の週",week_bear:"弱気の週",week_neut:"シグナルなし",entry:"エントリー価格",signal:"シグナル",t1:"保守的",t2:"バランス型",t3:"積極的",t4:"先見型",main:"メインターゲット",hit:"✓ 達成",miss:"✗ 未達成",pend:"⏳ 保留中",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"過去の週",date:"日付",disclaimer:"マクロ流動性指標に基づく分析。<br>投資助言ではありません。",from_entry:"エントリーから",live:"BTC リアルタイム",ht1:"保守",ht2:"均衡",ht3:"積極",ht4:"先見",streak_txt:"ターゲットおよび/または方向の的中率",chart:"週足チャート",hdir:"方向",week_to:"〜",legal:"⚖️ 免責事項",targets_title:"週間目標",locale:"ja-JP"}
+  es:{week_bull:"SEMANA ALCISTA",week_bear:"SEMANA BAJISTA",week_neut:"SIN SEÑAL",entry:"Precio de entrada",signal:"Señal",t1:"Conservador",t2:"Equilibrado",t3:"Ambicioso",t4:"Visionario",main:"Principal",hit:"✓ ALCANZADO",miss:"✗ NO ALCANZADO",pend:"⏳ PENDIENTE",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Semanas anteriores",date:"Fecha",disclaimer:"Análisis basado en indicadores macro de liquidez.<br>No constituye asesoramiento financiero.",from_entry:"desde entrada",live:"BTC en tiempo real",ht1:"Cons.",ht2:"Equil.",ht3:"Ambic.",ht4:"Vision.",streak_txt:"acierto en Target y/o Dirección",chart:"Gráfico semanal",hdir:"Dir.",week_to:"a",legal:"⚖️ Aviso Legal",targets_title:"Objetivo semanal",locale:"es-ES",how_title:"¿Cómo funciona?",how_body:"Cada semana analizamos datos macroeconómicos públicos para generar una señal direccional de Bitcoin (alcista o bajista) con 4 niveles de precio objetivo. Sin registro, sin spam — solo datos.",share:"Compartir"},
+  en:{week_bull:"BULLISH WEEK",week_bear:"BEARISH WEEK",week_neut:"NO SIGNAL",entry:"Entry price",signal:"Signal",t1:"Conservative",t2:"Balanced",t3:"Ambitious",t4:"Visionary",main:"Main target",hit:"✓ REACHED",miss:"✗ NOT REACHED",pend:"⏳ PENDING",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Previous weeks",date:"Date",disclaimer:"Analysis based on macro liquidity indicators.<br>Not financial advice.",from_entry:"from entry",live:"BTC live price",ht1:"Cons.",ht2:"Bal.",ht3:"Amb.",ht4:"Vision.",streak_txt:"Target and/or Direction accuracy",chart:"Weekly chart",hdir:"Dir.",week_to:"to",legal:"⚖️ Legal Disclaimer",targets_title:"Weekly target",locale:"en-US",how_title:"How does it work?",how_body:"Every week we analyze public macroeconomic data to generate a Bitcoin directional signal (bullish or bearish) with 4 price target levels. No signup, no spam — just data.",share:"Share"},
+  de:{week_bull:"BULLISCHE WOCHE",week_bear:"BÄRISCHE WOCHE",week_neut:"KEIN SIGNAL",entry:"Einstiegspreis",signal:"Signal",t1:"Konservativ",t2:"Ausgewogen",t3:"Ambitioniert",t4:"Visionär",main:"Hauptziel",hit:"✓ ERREICHT",miss:"✗ NICHT ERREICHT",pend:"⏳ AUSSTEHEND",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Vorherige Wochen",date:"Datum",disclaimer:"Analyse basiert auf Makro-Liquiditätsindikatoren.<br>Keine Finanzberatung.",from_entry:"ab Einstieg",live:"BTC Echtzeitpreis",ht1:"Kons.",ht2:"Ausg.",ht3:"Amb.",ht4:"Vision.",streak_txt:"Trefferquote Target und/oder Richtung",chart:"Wochenchart",hdir:"Richt.",week_to:"bis",legal:"⚖️ Rechtlicher Hinweis",targets_title:"Wochenziel",locale:"de-DE",how_title:"Wie funktioniert es?",how_body:"Jede Woche analysieren wir öffentliche makroökonomische Daten, um ein Bitcoin-Richtungssignal (bullisch oder bärisch) mit 4 Preiszielen zu generieren. Keine Anmeldung, kein Spam — nur Daten.",share:"Teilen"},
+  pt:{week_bull:"SEMANA ALTISTA",week_bear:"SEMANA BAIXISTA",week_neut:"SEM SINAL",entry:"Preço de entrada",signal:"Sinal",t1:"Conservador",t2:"Equilibrado",t3:"Ambicioso",t4:"Visionário",main:"Principal",hit:"✓ ALCANÇADO",miss:"✗ NÃO ALCANÇADO",pend:"⏳ PENDENTE",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Semanas anteriores",date:"Data",disclaimer:"Análise baseada em indicadores macro de liquidez.<br>Não constitui aconselhamento financeiro.",from_entry:"da entrada",live:"BTC preço ao vivo",ht1:"Cons.",ht2:"Equil.",ht3:"Amb.",ht4:"Vision.",streak_txt:"acerto em Target e/ou Direção",chart:"Gráfico semanal",hdir:"Dir.",week_to:"a",legal:"⚖️ Aviso Legal",targets_title:"Objetivo semanal",locale:"pt-BR",how_title:"Como funciona?",how_body:"Toda semana analisamos dados macroeconômicos públicos para gerar um sinal direcional de Bitcoin (altista ou baixista) com 4 níveis de preço-alvo. Sem cadastro, sem spam — apenas dados.",share:"Compartilhar"},
+  it:{week_bull:"SETTIMANA RIALZISTA",week_bear:"SETTIMANA RIBASSISTA",week_neut:"NESSUN SEGNALE",entry:"Prezzo di ingresso",signal:"Segnale",t1:"Conservativo",t2:"Equilibrato",t3:"Ambizioso",t4:"Visionario",main:"Principale",hit:"✓ RAGGIUNTO",miss:"✗ NON RAGGIUNTO",pend:"⏳ IN ATTESA",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Settimane precedenti",date:"Data",disclaimer:"Analisi basata su indicatori macro di liquidità.<br>Non costituisce consulenza finanziaria.",from_entry:"dall'ingresso",live:"BTC prezzo live",ht1:"Cons.",ht2:"Equil.",ht3:"Amb.",ht4:"Vision.",streak_txt:"precisione Target e/o Direzione",chart:"Grafico settimanale",hdir:"Dir.",week_to:"a",legal:"⚖️ Avviso Legale",targets_title:"Obiettivo settimanale",locale:"it-IT",how_title:"Come funziona?",how_body:"Ogni settimana analizziamo dati macroeconomici pubblici per generare un segnale direzionale Bitcoin (rialzista o ribassista) con 4 livelli di prezzo obiettivo. Senza registrazione, senza spam — solo dati.",share:"Condividi"},
+  fr:{week_bull:"SEMAINE HAUSSIÈRE",week_bear:"SEMAINE BAISSIÈRE",week_neut:"AUCUN SIGNAL",entry:"Prix d'entrée",signal:"Signal",t1:"Conservateur",t2:"Équilibré",t3:"Ambitieux",t4:"Visionnaire",main:"Principal",hit:"✓ ATTEINT",miss:"✗ NON ATTEINT",pend:"⏳ EN ATTENTE",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"Semaines précédentes",date:"Date",disclaimer:"Analyse basée sur des indicateurs macro de liquidité.<br>Ne constitue pas un conseil financier.",from_entry:"depuis l'entrée",live:"BTC prix en direct",ht1:"Cons.",ht2:"Équil.",ht3:"Amb.",ht4:"Vision.",streak_txt:"précision Target et/ou Direction",chart:"Graphique hebdomadaire",hdir:"Dir.",week_to:"au",legal:"⚖️ Mentions Légales",targets_title:"Objectif hebdomadaire",locale:"fr-FR",how_title:"Comment ça marche ?",how_body:"Chaque semaine, nous analysons des données macroéconomiques publiques pour générer un signal directionnel Bitcoin (haussier ou baissier) avec 4 niveaux de prix cibles. Sans inscription, sans spam — que des données.",share:"Partager"},
+  zh:{week_bull:"看涨周",week_bear:"看跌周",week_neut:"无信号",entry:"入场价格",signal:"信号",t1:"保守型",t2:"平衡型",t3:"进取型",t4:"远见型",main:"主要目标",hit:"✓ 已达到",miss:"✗ 未达到",pend:"⏳ 待定",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"前几周",date:"日期",disclaimer:"基于宏观流动性指标的分析。<br>不构成财务建议。",from_entry:"距入场",live:"BTC 实时价格",ht1:"保守",ht2:"平衡",ht3:"进取",ht4:"远见",streak_txt:"目标和/或方向命中率",chart:"周线图",hdir:"方向",week_to:"至",legal:"⚖️ 法律声明",targets_title:"每周目标",locale:"zh-CN",how_title:"如何运作？",how_body:"每周我们分析公开的宏观经济数据，生成比特币方向信号（看涨或看跌），包含4个价格目标。无需注册，无垃圾信息——只有数据。",share:"分享"},
+  ja:{week_bull:"強気の週",week_bear:"弱気の週",week_neut:"シグナルなし",entry:"エントリー価格",signal:"シグナル",t1:"保守的",t2:"バランス型",t3:"積極的",t4:"先見型",main:"メインターゲット",hit:"✓ 達成",miss:"✗ 未達成",pend:"⏳ 保留中",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"過去の週",date:"日付",disclaimer:"マクロ流動性指標に基づく分析。<br>投資助言ではありません。",from_entry:"エントリーから",live:"BTC リアルタイム",ht1:"保守",ht2:"均衡",ht3:"積極",ht4:"先見",streak_txt:"ターゲットおよび/または方向の的中率",chart:"週足チャート",hdir:"方向",week_to:"〜",legal:"⚖️ 免責事項",targets_title:"週間目標",locale:"ja-JP",how_title:"仕組みは？",how_body:"毎週、公開されているマクロ経済データを分析し、4つの価格目標を持つビットコインの方向性シグナル（強気または弱気）を生成します。登録不要、スパムなし——データのみ。",share:"共有"}
 };
 let lang="es";
-function setLang(l){lang=l;LANGS.forEach(k=>{document.getElementById("btn-"+k).className=k===l?"active":"";});const t=L[l];const m={"lbl-entry":"entry","lbl-signal":"signal","tp1-label":"t1","tp2-label":"t2","tp3-label":"t3","tp4-label":"t4","lbl-main":"main","hist-title-txt":"prev_weeks","lbl-h-date":"date","lbl-h-t1":"ht1","lbl-h-t2":"ht2","lbl-h-t3":"ht3","lbl-h-t4":"ht4","lbl-live":"live","chart-title-txt":"chart","lbl-h-dir":"hdir","targets-title":"targets_title"};for(const[id,key]of Object.entries(m))document.getElementById(id).textContent=t[key];document.getElementById("disclaimer-txt").innerHTML=t.disclaimer;document.getElementById("disclaimer-link").textContent=t.legal;const hist=getHistory();if(hist.length>0)renderSignal(hist[0]);renderHistory();}
+function setLang(l){lang=l;LANGS.forEach(k=>{document.getElementById("btn-"+k).className=k===l?"active":"";});const t=L[l];const m={"lbl-entry":"entry","lbl-signal":"signal","tp1-label":"t1","tp2-label":"t2","tp3-label":"t3","tp4-label":"t4","lbl-main":"main","hist-title-txt":"prev_weeks","lbl-h-date":"date","lbl-h-t1":"ht1","lbl-h-t2":"ht2","lbl-h-t3":"ht3","lbl-h-t4":"ht4","lbl-live":"live","chart-title-txt":"chart","lbl-h-dir":"hdir","targets-title":"targets_title","how-title":"how_title","share-label":"share"};for(const[id,key]of Object.entries(m))document.getElementById(id).textContent=t[key];document.getElementById("disclaimer-txt").innerHTML=t.disclaimer;document.getElementById("disclaimer-link").textContent=t.legal;document.getElementById("how-body").textContent=t.how_body;const hist=getHistory();if(hist.length>0)renderSignal(hist[0]);renderHistory();}
 
 /* Helpers */
 function fmt(n){return "$"+Math.round(n).toLocaleString("en-US");}
@@ -405,6 +426,11 @@ function renderSignal(e){
   const dt=new Date(e.date+"T12:00:00");const dt2=new Date(dt);dt2.setDate(dt2.getDate()+7);
   document.getElementById("r-week").textContent=shortDate(e.date)+" "+t.week_to+" "+shortDate(dt2.toISOString().slice(0,10));
   document.getElementById("result").className="show";
+  /* Share URLs */
+  const st=L[lang],dir=bull?st.week_bull:bear?st.week_bear:st.week_neut;
+  const shareText=`${dir} — ${fmt(e.btc)} | thebtcpulse.com`;
+  document.getElementById("share-x").href=`https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent("https://thebtcpulse.com")}`;
+  document.getElementById("share-wa").href=`https://wa.me/?text=${encodeURIComponent(shareText+" https://thebtcpulse.com")}`;
 }
 
 function toggleTP(i,tp){let hist=getHistory();if(i>=hist.length)return;const k="t"+tp+"hit",cur=hist[i][k];if(cur===null)hist[i][k]=true;else if(cur===true)hist[i][k]=false;else hist[i][k]=null;saveHistory(hist);renderSignal(hist[0]);renderHistory();}
@@ -435,8 +461,11 @@ function renderHistory(){
 /* Live price */
 async function fetchLivePrice(){try{const r=await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT");const d=await r.json();const price=parseFloat(d.lastPrice);const change=parseFloat(d.priceChangePercent);document.getElementById("live-val").textContent="$"+Math.round(price).toLocaleString("en-US");const ch=document.getElementById("live-change");ch.textContent=(change>=0?"+":"")+change.toFixed(2)+"%";ch.className="live-change "+(change>=0?"up":"down");}catch(e){document.getElementById("live-val").textContent="—";}}
 
-/* ===== CHART (TradingView Widget) ===== */
+/* ===== CHART (TradingView Widget - Lazy loaded) ===== */
+let chartLoaded=false;
 function loadChart(){
+  if(chartLoaded){document.getElementById("tv-chart").innerHTML="";}
+  chartLoaded=true;
   const container=document.getElementById("tv-chart");
   const dark=document.body.classList.contains("dark");
   container.innerHTML="";
@@ -466,6 +495,12 @@ function loadChart(){
   div.appendChild(script);
   container.appendChild(div);
 }
+function initLazyChart(){
+  const el=document.querySelector(".chart-section");
+  if(!el)return;
+  const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){loadChart();obs.disconnect();}});},{rootMargin:"200px"});
+  obs.observe(el);
+}
 
 /* Boot */
 (function(){
@@ -473,7 +508,7 @@ function loadChart(){
   if(hist.length>0){renderSignal(hist[0]);document.getElementById("r-time").textContent="06 abr 2026";}
   renderHistory();
   fetchLivePrice();setInterval(fetchLivePrice,30000);
-  loadChart();
+  initLazyChart();
   document.getElementById("disclaimer-link").textContent=L[lang].legal;
 })();
 </script>
