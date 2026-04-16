@@ -529,7 +529,8 @@ function stSm(hit){const t=L[lang];if(hit===true)return`<span class="tp-status h
 
 /* Data */
 const SEED=[
-  {date:"2026-04-09",dir:"BULL",btc:71865,t1:76177,t2:78692,t3:80848,t4:89831,t1hit:null,t2hit:null,t3hit:null,t4hit:null},
+  {date:"2026-04-16",dir:"BEAR",btc:75281,t1:70764,t2:68129,t3:65871,t4:56461,t1hit:null,t2hit:null,t3hit:null,t4hit:null},
+  {date:"2026-04-09",dir:"BULL",btc:71865,t1:76177,t2:78692,t3:80848,t4:89831,t1hit:false,t2hit:false,t3hit:false,t4hit:false},
   {date:"2026-04-02",dir:"BULL",btc:66950,t1:69373,t2:70786,t3:71997,t4:77049,t1hit:true,t2hit:true,t3hit:true,t4hit:false},
   {date:"2026-03-27",dir:"BEAR",btc:68582,t1:66554,t2:65370,t3:64356,t4:60146,t1hit:true,t2hit:true,t3hit:false,t4hit:false},
   {date:"2026-03-20",dir:"BEAR",btc:70731,t1:69226,t2:68347,t3:67595,t4:64471,t1hit:true,t2hit:true,t3hit:true,t4hit:true},
@@ -721,7 +722,7 @@ function initLazyChart(){
 /* Boot */
 (function(){
   const hist=getHistory();
-  if(hist.length>0){renderSignal(hist[0]);document.getElementById("r-time").textContent="15 abr 2026";}
+  if(hist.length>0){renderSignal(hist[0]);document.getElementById("r-time").textContent="16 abr 2026";}
   renderHistory();
   fetchLivePrice();setInterval(fetchLivePrice,30000);
   initLazyChart();
