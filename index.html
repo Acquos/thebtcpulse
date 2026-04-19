@@ -9,7 +9,7 @@
 <meta name="msapplication-TileColor" content="#F7931A">
 
 <title>The BTC Pulse — Bitcoin Price Today | Weekly BTC Futures Signal & Live Price Tracker</title>
-<meta name="description" content="Bitcoin price today in real time + free weekly BTC futures trading signal powered by proprietary macro liquidity analysis. 4 price targets with 41% hit rate. Live BTC/USDT price, daily chart, and 9+ week accuracy streak. The smartest way to trade Bitcoin futures.">
+<meta name="description" content="Bitcoin price today in real time + free weekly BTC futures trading signal powered by proprietary macro liquidity analysis. 4 price targets updated every Friday. Live BTC/USDT price, daily chart, direction track record. Available in 8 languages.">
 <meta name="keywords" content="Bitcoin price, BTC price today, Bitcoin price today, precio Bitcoin, Bitcoin futures, BTC futures trading, Bitcoin trading signal, weekly Bitcoin signal, BTC signal, Bitcoin weekly forecast, Bitcoin price prediction, BTC USDT, crypto trading signal, Bitcoin live price, BTC live, macro liquidity Bitcoin, Bitcoin weekly analysis, BTC futures signal, señal Bitcoin semanal, Bitcoin Kurs, prix Bitcoin, prezzo Bitcoin, preço Bitcoin, ビットコイン価格, 比特币价格">
 <meta name="author" content="The BTC Pulse">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -35,7 +35,7 @@
 
 <!-- Open Graph -->
 <meta property="og:title" content="The BTC Pulse — Bitcoin Price Today & Weekly Futures Signal">
-<meta property="og:description" content="Free weekly Bitcoin trading signal + live BTC price. 4 price targets powered by macro liquidity analysis. 9+ week accuracy streak.">
+<meta property="og:description" content="Free weekly Bitcoin trading signal + live BTC price. 4 price targets powered by macro liquidity analysis. Updated every Friday.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thebtcpulse.com">
 <meta property="og:image" content="https://thebtcpulse.com/og-v2.png">
@@ -55,7 +55,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The BTC Pulse — Bitcoin Price & Weekly Futures Signal">
-<meta name="twitter:description" content="Live BTC price + weekly directional signal with 4 price targets. Powered by macro liquidity analysis.">
+<meta name="twitter:description" content="Live BTC price + free weekly directional signal with 4 price targets. Updated every Friday. 8 languages.">
 <meta name="twitter:image" content="https://thebtcpulse.com/og-v2.png">
 <meta name="twitter:image:alt" content="The BTC Pulse weekly Bitcoin signal dashboard">
 
@@ -423,10 +423,59 @@ h2{font-size:inherit;font-weight:inherit;margin:0;}
   .wrap{max-width:100%;padding:1rem;}
   .tp-card,.dir-row{break-inside:avoid;}
 }
+
+/* ===== GLOBAL UX ===== */
+html{scroll-behavior:smooth;}
+::selection{background:rgba(247,147,26,.2);color:inherit;}
+:focus-visible{outline:2px solid var(--btc);outline-offset:2px;border-radius:4px;}
+.dark :focus-visible{outline-color:var(--btc);}
+
+/* ===== ACCESSIBILITY: touch targets ===== */
+.lang button{min-width:36px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;}
+.dark-toggle{min-width:44px;min-height:36px;}
+
+/* ===== SMOOTH EXPAND ANIMATION ===== */
+#dir-hist-body,#tstat-body{transition:max-height .4s ease-out;}
+
+/* ===== SKIP TO CONTENT (accessibility) ===== */
+.skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:var(--btc);color:#fff;padding:.5rem 1.2rem;border-radius:0 0 8px 8px;font-size:.7rem;font-weight:600;z-index:1000;text-decoration:none;transition:top .2s;}
+.skip-link:focus{top:0;}
+
+/* ===== IMPROVED DIRECTION ROW HOVER ===== */
+.dir-row:not(.dir-header):active{background:rgba(247,147,26,.06);transform:scale(.995);}
+.tstat-row:not(.tstat-header):hover{background:rgba(128,128,128,.03);border-radius:6px;}
+
+/* ===== LOADING SKELETON for live price ===== */
+@keyframes shimmer{0%{background-position:-200% 0;}100%{background-position:200% 0;}}
+.live-val:empty::after{content:'\00a0\00a0\00a0\00a0\00a0\00a0\00a0';background:linear-gradient(90deg,var(--border2) 25%,var(--border) 50%,var(--border2) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:6px;display:inline-block;}
+
+/* ===== TABLET BREAKPOINT ===== */
+@media(min-width:481px) and (max-width:768px){
+  .wrap{max-width:520px;padding:2.5rem 2rem;}
+  .header h1{font-size:2rem;}
+  .live-val{font-size:1.8rem;}
+  .entry-price{font-size:2rem;}
+  .tp-card{padding:1.2rem 1.4rem;}
+  .tp-card .tp-price{font-size:1.4rem;}
+  #tv-chart{height:400px!important;}
+}
+
+/* ===== TABLE OVERFLOW SAFETY ===== */
+.dir-hist,.target-stats{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.dir-row,.tstat-row{min-width:300px;}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+  .arrow-float{animation:none!important;}
+  .pulse-line{animation:none!important;opacity:.25;}
+  .reveal{opacity:1;transform:none;}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<a class="skip-link" href="#result">Skip to signal</a>
+<div class="wrap" role="main">
   <div class="pulse-line"></div>
   <header class="topbar"><div class="lang"><button class="active" id="btn-es" onclick="setLang('es')">ES</button><span class="sep">/</span><button id="btn-en" onclick="setLang('en')">EN</button><span class="sep">/</span><button id="btn-de" onclick="setLang('de')">DE</button><span class="sep">/</span><button id="btn-pt" onclick="setLang('pt')">PT</button><span class="sep">/</span><button id="btn-it" onclick="setLang('it')">IT</button><span class="sep">/</span><button id="btn-fr" onclick="setLang('fr')">FR</button><span class="sep">/</span><button id="btn-zh" onclick="setLang('zh')">中</button><span class="sep">/</span><button id="btn-ja" onclick="setLang('ja')">日</button></div><button class="dark-toggle" onclick="toggleDark()" aria-label="Dark mode"><div class="knob"></div></button></header>
   <div class="header"><h1><span class="the">The</span>BTC Pulse</h1><div class="domain">thebtcpulse.com</div></div>
@@ -446,6 +495,7 @@ h2{font-size:inherit;font-weight:inherit;margin:0;}
       <span class="share-label" id="share-label">Compartir</span>
       <a class="share-btn" id="share-x" href="#" target="_blank" rel="noopener" aria-label="Share on X">𝕏</a>
       <a class="share-btn" id="share-wa" href="#" target="_blank" rel="noopener" aria-label="Share on WhatsApp">💬</a>
+      <button class="share-btn" id="share-copy" onclick="navigator.clipboard.writeText('https://thebtcpulse.com').then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},1500)})" aria-label="Copy link">🔗</button>
     </div>
   </div>
   <!-- Direction history (grouped with signal above) -->
@@ -572,7 +622,9 @@ function renderSignal(e){
   }
   document.getElementById("r-entry").textContent=fmt(e.btc);
   const dt=new Date(e.date+"T12:00:00");const dt2=new Date(dt);dt2.setDate(dt2.getDate()+7);
-  document.getElementById("r-week").textContent=shortDate(e.date)+" "+t.week_to+" "+shortDate(dt2.toISOString().slice(0,10));
+  const daysLeft=Math.max(0,Math.ceil((dt2-new Date())/(1000*60*60*24)));
+  const countdown=daysLeft>0?`<div style="font-size:.5rem;color:var(--text5);margin-top:.15rem;">${daysLeft}d remaining</div>`:`<div style="font-size:.5rem;color:var(--btc);margin-top:.15rem;">Signal expired</div>`;
+  document.getElementById("r-week").innerHTML=shortDate(e.date)+" "+t.week_to+" "+shortDate(dt2.toISOString().slice(0,10))+countdown;
   document.getElementById("result").className="show";
   /* Share URLs */
   const st=L[lang],dir=bull?st.week_bull:bear?st.week_bear:st.week_neut;
