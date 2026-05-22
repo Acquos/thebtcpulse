@@ -731,7 +731,7 @@ function renderTargetStats(){
 }
 
 /* Live price */
-async function fetchLivePrice(){try{const r=await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT");const d=await r.json();const price=parseFloat(d.lastPrice);const change=parseFloat(d.priceChangePercent);document.getElementById("live-val").textContent="$"+Math.round(price).toLocaleString("en-US");const ch=document.getElementById("live-change");ch.textContent=(change>=0?"+":"")+change.toFixed(2)+"%";ch.className="live-change "+(change>=0?"up":"down");}catch(e){document.getElementById("live-val").textContent="—";}}
+async function fetchLivePrice(){try{const r=await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT");const d=await r.json();const price=parseFloat(d.lastPrice);document.getElementById("live-val").textContent="$"+Math.round(price).toLocaleString("en-US");const entryBtc=SEED[0].btc;const pctFromEntry=((price-entryBtc)/entryBtc)*100;const ch=document.getElementById("live-change");ch.textContent=(pctFromEntry>=0?"+":"")+pctFromEntry.toFixed(2)+"%";ch.className="live-change "+(pctFromEntry>=0?"up":"down");}catch(e){document.getElementById("live-val").textContent="—";}}
 
 /* ===== CHART (TradingView Widget - Lazy loaded) ===== */
 let chartLoaded=false;
