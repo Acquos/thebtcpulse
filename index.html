@@ -110,7 +110,7 @@
           "name": "What is the Bitcoin price today?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The BTC Pulse shows the live Bitcoin price in real time updated every 30 seconds from Binance (BTC/USDT), along with the percentage change since the current week's entry price."
+            "text": "The BTC Pulse shows the live Bitcoin price in real time updated every 30 seconds from Binance (BTC/USDT), along with the 24-hour price change percentage."
           }
         },
         {
@@ -577,7 +577,8 @@ function stSm(hit){const t=L[lang];if(hit===true)return`<span class="tp-status h
 
 /* Data */
 const SEED=[
-  {date:"2026-05-14",dir:"BULL",btc:81193,t1:85542,t2:88078,t3:90253,t4:99312,t1hit:null,t2hit:null,t3hit:null,t4hit:null},
+  {date:"2026-05-21",dir:"BULL",btc:77755,t1:84130,t2:87848,t3:91035,t4:104316,t1hit:null,t2hit:null,t3hit:null,t4hit:null},
+  {date:"2026-05-14",dir:"BULL",btc:81193,t1:85542,t2:88078,t3:90253,t4:99312,t1hit:false,t2hit:false,t3hit:false,t4hit:false},
   {date:"2026-05-07",dir:"BULL",btc:80148,t1:84957,t2:87762,t3:90166,t4:100185,t1hit:false,t2hit:false,t3hit:false,t4hit:false},
   {date:"2026-04-30",dir:"BULL",btc:76362,t1:78552,t2:79829,t3:80924,t4:85486,t1hit:true,t2hit:true,t3hit:true,t4hit:null},
   {date:"2026-04-23",dir:"BEAR",btc:77840,t1:73170,t2:70445,t3:68110,t4:58380,t1hit:false,t2hit:false,t3hit:false,t4hit:false},
@@ -730,7 +731,7 @@ function renderTargetStats(){
 }
 
 /* Live price */
-async function fetchLivePrice(){try{const r=await fetch("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT");const d=await r.json();const price=parseFloat(d.price);document.getElementById("live-val").textContent="$"+Math.round(price).toLocaleString("en-US");const ch=document.getElementById("live-change");const entry=(typeof SEED!=="undefined"&&SEED.length>0)?SEED[0].btc:null;if(entry&&entry>0){const change=((price-entry)/entry)*100;ch.textContent=(change>=0?"+":"")+change.toFixed(2)+"%";ch.className="live-change "+(change>=0?"up":"down");ch.style.display="";}else{ch.textContent="";ch.className="live-change";ch.style.display="none";}}catch(e){document.getElementById("live-val").textContent="—";}}
+async function fetchLivePrice(){try{const r=await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT");const d=await r.json();const price=parseFloat(d.lastPrice);const change=parseFloat(d.priceChangePercent);document.getElementById("live-val").textContent="$"+Math.round(price).toLocaleString("en-US");const ch=document.getElementById("live-change");ch.textContent=(change>=0?"+":"")+change.toFixed(2)+"%";ch.className="live-change "+(change>=0?"up":"down");}catch(e){document.getElementById("live-val").textContent="—";}}
 
 /* ===== CHART (TradingView Widget - Lazy loaded) ===== */
 let chartLoaded=false;
