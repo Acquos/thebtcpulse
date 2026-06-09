@@ -22,16 +22,16 @@
 <meta name="geo.placename" content="Madrid">
 <meta name="content-language" content="es, en, fr, pt, it, de, zh, ja">
 
-<!-- Hreflang for multilingual SEO -->
-<link rel="alternate" hreflang="es" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="en" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="fr" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="pt" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="it" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="de" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="zh" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="ja" href="https://thebtcpulse.com">
-<link rel="alternate" hreflang="x-default" href="https://thebtcpulse.com">
+<!-- Hreflang for multilingual SEO (distinct URL per language) -->
+<link rel="alternate" hreflang="es" href="https://thebtcpulse.com/?lang=es">
+<link rel="alternate" hreflang="en" href="https://thebtcpulse.com/?lang=en">
+<link rel="alternate" hreflang="fr" href="https://thebtcpulse.com/?lang=fr">
+<link rel="alternate" hreflang="pt" href="https://thebtcpulse.com/?lang=pt">
+<link rel="alternate" hreflang="it" href="https://thebtcpulse.com/?lang=it">
+<link rel="alternate" hreflang="de" href="https://thebtcpulse.com/?lang=de">
+<link rel="alternate" hreflang="zh" href="https://thebtcpulse.com/?lang=zh">
+<link rel="alternate" hreflang="ja" href="https://thebtcpulse.com/?lang=ja">
+<link rel="alternate" hreflang="x-default" href="https://thebtcpulse.com/">
 
 <!-- Open Graph -->
 <meta property="og:title" content="The BTC Pulse — Bitcoin Price Today & Weekly Futures Signal">
@@ -471,6 +471,32 @@ html{scroll-behavior:smooth;}
   .pulse-line{animation:none!important;opacity:.25;}
   .reveal{opacity:1;transform:none;}
 }
+
+/* ===== LIVE DISTANCE TO TARGET ===== */
+.tp-live{font-size:.5rem;font-weight:600;letter-spacing:.04em;margin-top:.2rem;color:var(--text4);transition:color .3s;}
+.tp-card.secondary .tp-live{font-size:.45rem;}
+.tp-live.reached{color:var(--btc);}
+.tp-live .lv-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:currentColor;margin-right:.25rem;vertical-align:middle;opacity:.7;}
+.tp-card.live-reached{box-shadow:0 0 0 1.5px var(--hit-bd),0 4px 12px rgba(247,147,26,.1);}
+
+/* ===== STICKY LIVE PRICE (mobile) ===== */
+@media(max-width:768px){
+  .live-price{position:sticky;top:0;z-index:60;margin-left:-1rem;margin-right:-1rem;padding:.7rem 1rem;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--border2);transition:padding .25s,box-shadow .25s;}
+  .live-price.stuck{box-shadow:0 4px 16px rgba(0,0,0,.06);}
+  .live-price.stuck .live-label{display:none;}
+  .live-price.stuck .live-val{font-size:1.1rem;}
+}
+
+/* ===== FAQ ===== */
+.faq-section{margin-top:2.5rem;}
+.faq-title{font-size:.5rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--text4);margin-bottom:1rem;text-align:center;}
+.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:.5rem;overflow:hidden;background:var(--card);transition:border-color .25s;}
+.faq-item[open]{border-color:var(--hit-bd);}
+.faq-item summary{padding:.85rem 1.1rem;font-size:.72rem;font-weight:600;color:var(--text);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:.6rem;-webkit-tap-highlight-color:transparent;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';font-size:1rem;font-weight:400;color:var(--text4);transition:transform .25s;}
+.faq-item[open] summary::after{transform:rotate(45deg);color:var(--btc);}
+.faq-item .faq-a{padding:0 1.1rem 1rem;font-size:.68rem;color:var(--text2);line-height:1.7;}
 </style>
 </head>
 <body>
@@ -495,7 +521,7 @@ html{scroll-behavior:smooth;}
       <span class="share-label" id="share-label">Compartir</span>
       <a class="share-btn" id="share-x" href="#" target="_blank" rel="noopener" aria-label="Share on X">𝕏</a>
       <a class="share-btn" id="share-wa" href="#" target="_blank" rel="noopener" aria-label="Share on WhatsApp">💬</a>
-      <button class="share-btn" id="share-copy" onclick="navigator.clipboard.writeText('https://thebtcpulse.com').then(()=>{this.textContent='✓';setTimeout(()=>{this.textContent='🔗'},1500)})" aria-label="Copy link">🔗</button>
+      <button class="share-btn" id="share-copy" onclick="copyShare(this)" aria-label="Copy signal">🔗</button>
     </div>
   </div>
   <!-- Direction history (grouped with signal above) -->
@@ -514,10 +540,10 @@ html{scroll-behavior:smooth;}
       <h2 class="target-section-title" id="targets-title">Objetivo semanal</h2>
     </div>
     <div id="targets" class="targets-stack">
-      <div class="tp-card anim d2" id="tp1-card"><div class="star" id="tp1-star">★ <span id="lbl-main">Principal</span></div><div class="tp-left"><div class="tp-label" id="tp1-label">Conservador</div><div class="tp-price" id="tp1-price">—</div><div class="tp-pct" id="tp1-pct">—</div></div><div class="tp-status" id="tp1-status"></div></div>
-      <div class="tp-card secondary anim d3" id="tp2-card"><div class="tp-left"><div class="tp-label" id="tp2-label">Equilibrado</div><div class="tp-price" id="tp2-price">—</div><div class="tp-pct" id="tp2-pct">—</div></div><div class="tp-status" id="tp2-status"></div></div>
-      <div class="tp-card secondary anim d4" id="tp3-card"><div class="tp-left"><div class="tp-label" id="tp3-label">Ambicioso</div><div class="tp-price" id="tp3-price">—</div><div class="tp-pct" id="tp3-pct">—</div></div><div class="tp-status" id="tp3-status"></div></div>
-      <div class="tp-card secondary anim d5" id="tp4-card"><div class="tp-left"><div class="tp-label" id="tp4-label">Visionario</div><div class="tp-price" id="tp4-price">—</div><div class="tp-pct" id="tp4-pct">—</div></div><div class="tp-status" id="tp4-status"></div></div>
+      <div class="tp-card anim d2" id="tp1-card"><div class="star" id="tp1-star">★ <span id="lbl-main">Principal</span></div><div class="tp-left"><div class="tp-label" id="tp1-label">Conservador</div><div class="tp-price" id="tp1-price">—</div><div class="tp-pct" id="tp1-pct">—</div><div class="tp-live" id="tp1-live"></div></div><div class="tp-status" id="tp1-status"></div></div>
+      <div class="tp-card secondary anim d3" id="tp2-card"><div class="tp-left"><div class="tp-label" id="tp2-label">Equilibrado</div><div class="tp-price" id="tp2-price">—</div><div class="tp-pct" id="tp2-pct">—</div><div class="tp-live" id="tp2-live"></div></div><div class="tp-status" id="tp2-status"></div></div>
+      <div class="tp-card secondary anim d4" id="tp3-card"><div class="tp-left"><div class="tp-label" id="tp3-label">Ambicioso</div><div class="tp-price" id="tp3-price">—</div><div class="tp-pct" id="tp3-pct">—</div><div class="tp-live" id="tp3-live"></div></div><div class="tp-status" id="tp3-status"></div></div>
+      <div class="tp-card secondary anim d5" id="tp4-card"><div class="tp-left"><div class="tp-label" id="tp4-label">Visionario</div><div class="tp-price" id="tp4-price">—</div><div class="tp-pct" id="tp4-pct">—</div><div class="tp-live" id="tp4-live"></div></div><div class="tp-status" id="tp4-status"></div></div>
     </div>
     <!-- Target stats (inside the same card) -->
     <div class="target-stats">
@@ -535,6 +561,17 @@ html{scroll-behavior:smooth;}
     <h2 class="chart-title" id="chart-title-txt">Gráfico semanal</h2>
     <div id="tv-chart" style="width:100%;height:360px;border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 12px rgba(0,0,0,.03);"></div>
   </section>
+  <section class="faq-section reveal" aria-label="Frequently asked questions">
+    <h2 class="faq-title" id="faq-title">FAQ</h2>
+    <div id="faq-body">
+      <details class="faq-item"><summary>What is the Bitcoin price today?</summary><div class="faq-a">The BTC Pulse shows the live Bitcoin price (BTC/USDT) updated every 30 seconds, alongside the change versus the current weekly entry price.</div></details>
+      <details class="faq-item"><summary>How does the weekly Bitcoin signal work?</summary><div class="faq-a">Every Thursday we publish a directional signal — bullish or bearish — derived from a proprietary macro liquidity model built on public economic data.</div></details>
+      <details class="faq-item"><summary>What are the 4 Bitcoin price targets?</summary><div class="faq-a">Each signal includes four graduated targets — Conservative, Balanced, Ambitious and Visionary — and shows the historical hit rate next to each level.</div></details>
+      <details class="faq-item"><summary>Is The BTC Pulse free?</summary><div class="faq-a">Yes. The live price, the weekly signal, the 4 targets, the full track record and the chart are all free, with no signup required.</div></details>
+      <details class="faq-item"><summary>How accurate is the signal?</summary><div class="faq-a">We publish the full track record: the yearly direction hit rate and the historical hit rate of each of the four targets, updated every week.</div></details>
+    </div>
+  </section>
+
   <footer class="legal-footer">
     <div style="font-size:.6rem;color:var(--text4);line-height:1.8;margin-bottom:.5rem;">The BTC Pulse — Bitcoin price today & weekly BTC futures trading signal<br>Live BTC/USDT price · 4 weekly targets · Powered by macro liquidity analysis</div>
     <div style="font-size:.6rem;color:var(--text5);">© 2026 thebtcpulse.com · <a href="disclaimer.html" id="disclaimer-link" style="color:var(--text4);text-decoration:none;">⚖️ Aviso Legal</a></div>
@@ -565,8 +602,31 @@ const L={
   zh:{week_bull:"看涨周",week_bear:"看跌周",week_neut:"无信号",entry:"入场价格",signal:"信号",t1:"保守型",t2:"平衡型",t3:"进取型",t4:"远见型",main:"主要目标",hit:"✓ 已达到",miss:"✗ 未达到",pend:"⏳ 待定",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"前几周",date:"日期",disclaimer:"基于宏观流动性指标的分析。<br>不构成财务建议。",from_entry:"距入场",live:"BTC 实时价格",ht1:"保守",ht2:"平衡",ht3:"进取",ht4:"远见",streak_txt:"目标和/或方向命中率",chart:"周线图",hdir:"方向",week_to:"至",legal:"⚖️ 法律声明",targets_title:"每周目标",locale:"zh-CN",how_title:"如何运作？",how_body:"每周我们分析公开的宏观经济数据，生成比特币方向信号（看涨或看跌），包含4个价格目标。无需注册，无垃圾信息——只有数据。",share:"分享",dir_title:"方向记录",dir_accuracy:"方向命中率",see_more:"▼ 查看更多",see_less:"▲ 收起",total_year:"2026年全年",dh_week:"周",dh_entry:"入场",dh_exit:"出场",dh_result:"结果",dh_ok:"✓",dh_fail:"✗",dh_pend:"⏳",ts_title:"价格目标",ts_hitrate:"命中率"},
   ja:{week_bull:"強気の週",week_bear:"弱気の週",week_neut:"シグナルなし",entry:"エントリー価格",signal:"シグナル",t1:"保守的",t2:"バランス型",t3:"積極的",t4:"先見型",main:"メインターゲット",hit:"✓ 達成",miss:"✗ 未達成",pend:"⏳ 保留中",hit_s:"✓",miss_s:"✗",pend_s:"…",prev_weeks:"過去の週",date:"日付",disclaimer:"マクロ流動性指標に基づく分析。<br>投資助言ではありません。",from_entry:"エントリーから",live:"BTC リアルタイム",ht1:"保守",ht2:"均衡",ht3:"積極",ht4:"先見",streak_txt:"ターゲットおよび/または方向の的中率",chart:"週足チャート",hdir:"方向",week_to:"〜",legal:"⚖️ 免責事項",targets_title:"週間目標",locale:"ja-JP",how_title:"仕組みは？",how_body:"毎週、公開されているマクロ経済データを分析し、4つの価格目標を持つビットコインの方向性シグナル（強気または弱気）を生成します。登録不要、スパムなし——データのみ。",share:"共有",dir_title:"方向の実績",dir_accuracy:"方向の的中率",see_more:"▼ もっと見る",see_less:"▲ 閉じる",total_year:"2026年通年",dh_week:"週",dh_entry:"エントリー",dh_exit:"イグジット",dh_result:"結果",dh_ok:"✓",dh_fail:"✗",dh_pend:"⏳",ts_title:"価格目標",ts_hitrate:"的中率"}
 };
+/* Extra i18n keys merged into L at runtime (keeps the L block above untouched) */
+const EXTRA={
+  es:{dleft:"d restantes",expired:"Señal expirada",updated:"Actualizado",live_word:"en vivo",reached_live:"✓ alcanzado",sub_title:"Recibe la señal cada jueves",sub_sub:"Un email a la semana con la nueva señal direccional y sus 4 objetivos. Sin spam, baja cuando quieras.",sub_btn:"Suscribirme",sub_ph:"tu@email.com",sub_note:"Gratis · No es asesoramiento financiero",sub_ok:"✓ ¡Hecho! Revisa tu correo.",sub_err:"Introduce un email válido.",sub_soon:"Suscripción disponible muy pronto.",faq_title:"Preguntas frecuentes"},
+  en:{dleft:"d left",expired:"Signal expired",updated:"Updated",live_word:"live",reached_live:"✓ reached",sub_title:"Get the signal every Thursday",sub_sub:"One email a week with the new directional signal and its 4 price targets. No spam, unsubscribe anytime.",sub_btn:"Subscribe",sub_ph:"you@email.com",sub_note:"Free · Not financial advice",sub_ok:"✓ Done! Check your inbox.",sub_err:"Enter a valid email.",sub_soon:"Subscriptions opening very soon.",faq_title:"FAQ"},
+  de:{dleft:"T übrig",expired:"Signal abgelaufen",updated:"Aktualisiert",live_word:"live",reached_live:"✓ erreicht",sub_title:"Erhalte das Signal jeden Donnerstag",sub_sub:"Eine E-Mail pro Woche mit dem neuen Richtungssignal und seinen 4 Zielen. Kein Spam, jederzeit abbestellbar.",sub_btn:"Abonnieren",sub_ph:"du@email.com",sub_note:"Kostenlos · Keine Finanzberatung",sub_ok:"✓ Fertig! Prüfe dein Postfach.",sub_err:"Gib eine gültige E-Mail ein.",sub_soon:"Anmeldung bald verfügbar.",faq_title:"Häufige Fragen"},
+  pt:{dleft:"d restantes",expired:"Sinal expirado",updated:"Atualizado",live_word:"ao vivo",reached_live:"✓ alcançado",sub_title:"Receba o sinal toda quinta",sub_sub:"Um email por semana com o novo sinal direcional e seus 4 alvos. Sem spam, cancele quando quiser.",sub_btn:"Inscrever-me",sub_ph:"voce@email.com",sub_note:"Grátis · Não é aconselhamento financeiro",sub_ok:"✓ Pronto! Verifique seu email.",sub_err:"Insira um email válido.",sub_soon:"Inscrições em breve.",faq_title:"Perguntas frequentes"},
+  it:{dleft:"g rimasti",expired:"Segnale scaduto",updated:"Aggiornato",live_word:"live",reached_live:"✓ raggiunto",sub_title:"Ricevi il segnale ogni giovedì",sub_sub:"Un'email a settimana con il nuovo segnale direzionale e i suoi 4 obiettivi. Niente spam, disiscriviti quando vuoi.",sub_btn:"Iscrivimi",sub_ph:"tu@email.com",sub_note:"Gratis · Non è consulenza finanziaria",sub_ok:"✓ Fatto! Controlla la posta.",sub_err:"Inserisci un'email valida.",sub_soon:"Iscrizioni disponibili a breve.",faq_title:"Domande frequenti"},
+  fr:{dleft:"j restants",expired:"Signal expiré",updated:"Mis à jour",live_word:"en direct",reached_live:"✓ atteint",sub_title:"Reçois le signal chaque jeudi",sub_sub:"Un email par semaine avec le nouveau signal directionnel et ses 4 objectifs. Sans spam, désabonnement à tout moment.",sub_btn:"S'abonner",sub_ph:"toi@email.com",sub_note:"Gratuit · Pas un conseil financier",sub_ok:"✓ C'est fait ! Vérifie ta boîte.",sub_err:"Entre un email valide.",sub_soon:"Inscriptions bientôt disponibles.",faq_title:"Questions fréquentes"},
+  zh:{dleft:"天剩余",expired:"信号已过期",updated:"更新于",live_word:"实时",reached_live:"✓ 已达到",sub_title:"每周四获取信号",sub_sub:"每周一封邮件，包含新的方向信号及其4个目标价。无垃圾邮件，随时退订。",sub_btn:"订阅",sub_ph:"you@email.com",sub_note:"免费 · 非财务建议",sub_ok:"✓ 完成！请查收邮件。",sub_err:"请输入有效邮箱。",sub_soon:"订阅即将开放。",faq_title:"常见问题"},
+  ja:{dleft:"日残り",expired:"シグナル期限切れ",updated:"更新日",live_word:"ライブ",reached_live:"✓ 到達",sub_title:"毎週木曜にシグナルを受け取る",sub_sub:"毎週1通のメールで新しい方向性シグナルと4つの目標価格をお届け。スパムなし、いつでも解除可能。",sub_btn:"登録",sub_ph:"you@email.com",sub_note:"無料・投資助言ではありません",sub_ok:"✓ 完了！メールをご確認ください。",sub_err:"有効なメールを入力してください。",sub_soon:"登録はまもなく開始します。",faq_title:"よくある質問"}
+};
+Object.keys(EXTRA).forEach(k=>{if(L[k])Object.assign(L[k],EXTRA[k]);});
+/* FAQ content per language (rendered into #faq-body) */
+const FAQI18N={
+  es:[{q:"¿Cuál es el precio de Bitcoin hoy?",a:"The BTC Pulse muestra el precio de Bitcoin en vivo (BTC/USDT) actualizado cada 30 segundos, junto al cambio respecto al precio de entrada de la semana."},{q:"¿Cómo funciona la señal semanal?",a:"Cada jueves publicamos una señal direccional —alcista o bajista— derivada de un modelo propio de liquidez macro basado en datos económicos públicos."},{q:"¿Cuáles son los 4 objetivos de precio?",a:"Cada señal incluye cuatro objetivos graduados —Conservador, Equilibrado, Ambicioso y Visionario— con su tasa de acierto histórica junto a cada nivel."},{q:"¿The BTC Pulse es gratis?",a:"Sí. El precio en vivo, la señal semanal, los 4 objetivos, el historial completo y el gráfico son gratis y sin registro."},{q:"¿Qué precisión tiene la señal?",a:"Publicamos el historial completo: la tasa de acierto de dirección del año y la tasa histórica de cada uno de los cuatro objetivos, actualizadas cada semana."}],
+  en:[{q:"What is the Bitcoin price today?",a:"The BTC Pulse shows the live Bitcoin price (BTC/USDT) updated every 30 seconds, alongside the change versus the current weekly entry price."},{q:"How does the weekly Bitcoin signal work?",a:"Every Thursday we publish a directional signal — bullish or bearish — derived from a proprietary macro liquidity model built on public economic data."},{q:"What are the 4 Bitcoin price targets?",a:"Each signal includes four graduated targets — Conservative, Balanced, Ambitious and Visionary — and shows the historical hit rate next to each level."},{q:"Is The BTC Pulse free?",a:"Yes. The live price, the weekly signal, the 4 targets, the full track record and the chart are all free, with no signup required."},{q:"How accurate is the signal?",a:"We publish the full track record: the yearly direction hit rate and the historical hit rate of each of the four targets, updated every week."}],
+  de:[{q:"Wie hoch ist der Bitcoin-Preis heute?",a:"The BTC Pulse zeigt den Live-Bitcoin-Preis (BTC/USDT), alle 30 Sekunden aktualisiert, samt der Veränderung gegenüber dem wöchentlichen Einstiegspreis."},{q:"Wie funktioniert das wöchentliche Signal?",a:"Jeden Donnerstag veröffentlichen wir ein Richtungssignal — bullisch oder bärisch — aus einem eigenen Makro-Liquiditätsmodell auf Basis öffentlicher Wirtschaftsdaten."},{q:"Was sind die 4 Kursziele?",a:"Jedes Signal enthält vier gestufte Ziele — Konservativ, Ausgewogen, Ambitioniert und Visionär — mit der historischen Trefferquote neben jedem Niveau."},{q:"Ist The BTC Pulse kostenlos?",a:"Ja. Live-Preis, Wochensignal, die 4 Ziele, der vollständige Verlauf und der Chart sind kostenlos und ohne Anmeldung."},{q:"Wie genau ist das Signal?",a:"Wir veröffentlichen den vollständigen Verlauf: die jährliche Richtungstrefferquote und die historische Trefferquote jedes der vier Ziele, wöchentlich aktualisiert."}],
+  pt:[{q:"Qual é o preço do Bitcoin hoje?",a:"The BTC Pulse mostra o preço do Bitcoin ao vivo (BTC/USDT) atualizado a cada 30 segundos, junto à variação em relação ao preço de entrada da semana."},{q:"Como funciona o sinal semanal?",a:"Toda quinta publicamos um sinal direcional — altista ou baixista — derivado de um modelo próprio de liquidez macro baseado em dados econômicos públicos."},{q:"Quais são os 4 alvos de preço?",a:"Cada sinal inclui quatro alvos graduados — Conservador, Equilibrado, Ambicioso e Visionário — com a taxa de acerto histórica ao lado de cada nível."},{q:"O The BTC Pulse é grátis?",a:"Sim. O preço ao vivo, o sinal semanal, os 4 alvos, o histórico completo e o gráfico são grátis e sem cadastro."},{q:"Qual a precisão do sinal?",a:"Publicamos o histórico completo: a taxa de acerto de direção do ano e a taxa histórica de cada um dos quatro alvos, atualizadas semanalmente."}],
+  it:[{q:"Qual è il prezzo di Bitcoin oggi?",a:"The BTC Pulse mostra il prezzo di Bitcoin live (BTC/USDT) aggiornato ogni 30 secondi, con la variazione rispetto al prezzo di ingresso della settimana."},{q:"Come funziona il segnale settimanale?",a:"Ogni giovedì pubblichiamo un segnale direzionale — rialzista o ribassista — da un modello proprietario di liquidità macro basato su dati economici pubblici."},{q:"Quali sono i 4 obiettivi di prezzo?",a:"Ogni segnale include quattro obiettivi graduati — Conservativo, Equilibrato, Ambizioso e Visionario — con il tasso di successo storico accanto a ogni livello."},{q:"The BTC Pulse è gratis?",a:"Sì. Prezzo live, segnale settimanale, i 4 obiettivi, lo storico completo e il grafico sono gratis e senza registrazione."},{q:"Quanto è preciso il segnale?",a:"Pubblichiamo lo storico completo: il tasso di successo di direzione dell'anno e quello storico di ciascuno dei quattro obiettivi, aggiornati ogni settimana."}],
+  fr:[{q:"Quel est le prix du Bitcoin aujourd'hui ?",a:"The BTC Pulse affiche le prix du Bitcoin en direct (BTC/USDT) mis à jour toutes les 30 secondes, avec la variation par rapport au prix d'entrée de la semaine."},{q:"Comment fonctionne le signal hebdomadaire ?",a:"Chaque jeudi, nous publions un signal directionnel — haussier ou baissier — issu d'un modèle propriétaire de liquidité macro basé sur des données économiques publiques."},{q:"Quels sont les 4 objectifs de prix ?",a:"Chaque signal comprend quatre objectifs progressifs — Conservateur, Équilibré, Ambitieux et Visionnaire — avec le taux de réussite historique à côté de chaque niveau."},{q:"The BTC Pulse est-il gratuit ?",a:"Oui. Le prix en direct, le signal hebdomadaire, les 4 objectifs, l'historique complet et le graphique sont gratuits et sans inscription."},{q:"Quelle est la précision du signal ?",a:"Nous publions l'historique complet : le taux de réussite directionnel de l'année et le taux historique de chacun des quatre objectifs, mis à jour chaque semaine."}],
+  zh:[{q:"今天比特币价格是多少？",a:"The BTC Pulse 显示实时比特币价格（BTC/USDT），每30秒更新一次，并显示相对于本周入场价的变化。"},{q:"每周信号如何运作？",a:"每周四我们发布一个方向信号——看涨或看跌——来自基于公开经济数据的专有宏观流动性模型。"},{q:"4个价格目标是什么？",a:"每个信号包含四个梯度目标——保守型、平衡型、进取型和远见型——并在每个级别旁显示历史命中率。"},{q:"The BTC Pulse 免费吗？",a:"是的。实时价格、每周信号、4个目标、完整记录和图表都免费，无需注册。"},{q:"信号的准确率如何？",a:"我们公布完整记录：年度方向命中率以及四个目标各自的历史命中率，每周更新。"}],
+  ja:[{q:"今日のビットコイン価格は？",a:"The BTC Pulse は30秒ごとに更新されるビットコインのライブ価格（BTC/USDT）と、その週のエントリー価格に対する変動を表示します。"},{q:"週間シグナルの仕組みは？",a:"毎週木曜日、公開された経済データに基づく独自のマクロ流動性モデルから、方向性シグナル（強気または弱気）を公開します。"},{q:"4つの価格目標とは？",a:"各シグナルには4段階の目標——保守的、バランス型、積極的、先見型——が含まれ、各水準の横に過去の的中率を表示します。"},{q:"The BTC Pulse は無料ですか？",a:"はい。ライブ価格、週間シグナル、4つの目標、全実績、チャートはすべて無料で、登録は不要です。"},{q:"シグナルの精度は？",a:"全実績を公開しています：年間の方向的中率と、4つの目標それぞれの過去の的中率を毎週更新します。"}]
+};
 let lang="es";
-function setLang(l){lang=l;LANGS.forEach(k=>{document.getElementById("btn-"+k).className=k===l?"active":"";});const t=L[l];const m={"lbl-entry":"entry","lbl-signal":"signal","tp1-label":"t1","tp2-label":"t2","tp3-label":"t3","tp4-label":"t4","lbl-main":"main","lbl-live":"live","chart-title-txt":"chart","targets-title":"targets_title","how-title":"how_title","share-label":"share","dir-hist-title":"dir_title","lbl-dh-dates":"dh_week","lbl-dh-dir":"hdir","lbl-dh-entry":"dh_entry","lbl-dh-exit":"dh_exit","lbl-dh-result":"dh_result","target-stats-title":"ts_title","lbl-ts-date":"date","lbl-ts-dir":"hdir","lbl-ts-t1":"ht1","lbl-ts-t2":"ht2","lbl-ts-t3":"ht3","lbl-ts-t4":"ht4"};for(const[id,key]of Object.entries(m))document.getElementById(id).textContent=t[key];document.getElementById("disclaimer-txt").innerHTML=t.disclaimer;document.getElementById("disclaimer-link").textContent=t.legal;document.getElementById("how-body").textContent=t.how_body;const hist=getHistory();if(hist.length>0)renderSignal(hist[0]);renderHistory();}
+function setLang(l,skipUrl){lang=l;LANGS.forEach(k=>{const b=document.getElementById("btn-"+k);if(b)b.className=k===l?"active":"";});const t=L[l];const m={"lbl-entry":"entry","lbl-signal":"signal","tp1-label":"t1","tp2-label":"t2","tp3-label":"t3","tp4-label":"t4","lbl-main":"main","lbl-live":"live","chart-title-txt":"chart","targets-title":"targets_title","how-title":"how_title","share-label":"share","dir-hist-title":"dir_title","lbl-dh-dates":"dh_week","lbl-dh-dir":"hdir","lbl-dh-entry":"dh_entry","lbl-dh-exit":"dh_exit","lbl-dh-result":"dh_result","target-stats-title":"ts_title","lbl-ts-date":"date","lbl-ts-dir":"hdir","lbl-ts-t1":"ht1","lbl-ts-t2":"ht2","lbl-ts-t3":"ht3","lbl-ts-t4":"ht4","faq-title":"faq_title"};for(const[id,key]of Object.entries(m)){const el=document.getElementById(id);if(el)el.textContent=t[key];}document.getElementById("disclaimer-txt").innerHTML=t.disclaimer;document.getElementById("disclaimer-link").textContent=t.legal;document.getElementById("how-body").textContent=t.how_body;renderFAQ();document.documentElement.lang=l;try{localStorage.setItem("btcpulse_lang",l);}catch(e){}if(!skipUrl){try{const u=new URL(location.href);u.searchParams.set("lang",l);history.replaceState(null,"",u);}catch(e){}const cn=document.querySelector('link[rel="canonical"]');if(cn)cn.href="https://thebtcpulse.com/?lang="+l;const ou=document.querySelector('meta[property="og:url"]');if(ou)ou.setAttribute("content","https://thebtcpulse.com/?lang="+l);}const ogl=document.querySelector('meta[property="og:locale"]');if(ogl&&t.locale)ogl.setAttribute("content",t.locale.replace("-","_"));const hist=getHistory();if(hist.length>0)renderSignal(hist[0]);renderHistory();}
 
 /* Helpers */
 function fmt(n){return "$"+Math.round(n).toLocaleString("en-US");}
@@ -630,14 +690,17 @@ function renderSignal(e){
   document.getElementById("r-entry").textContent=fmt(e.btc);
   const dt=new Date(e.date+"T12:00:00");const dt2=new Date(dt);dt2.setDate(dt2.getDate()+7);
   const daysLeft=Math.max(0,Math.ceil((dt2-new Date())/(1000*60*60*24)));
-  const countdown=daysLeft>0?`<div style="font-size:.5rem;color:var(--text5);margin-top:.15rem;">${daysLeft}d remaining</div>`:`<div style="font-size:.5rem;color:var(--btc);margin-top:.15rem;">Signal expired</div>`;
+  const countdown=daysLeft>0?`<div style="font-size:.5rem;color:var(--text5);margin-top:.15rem;">${daysLeft}${t.dleft}</div>`:`<div style="font-size:.5rem;color:var(--btc);margin-top:.15rem;">${t.expired}</div>`;
   document.getElementById("r-week").innerHTML=shortDate(e.date)+" "+t.week_to+" "+shortDate(dt2.toISOString().slice(0,10))+countdown;
   document.getElementById("result").className="show";
   /* Share URLs */
   const st=L[lang],dir=bull?st.week_bull:bear?st.week_bear:st.week_neut;
   const shareText=`${dir} — ${fmt(e.btc)} | thebtcpulse.com`;
+  window.__shareText=shareText;
   document.getElementById("share-x").href=`https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent("https://thebtcpulse.com")}`;
   document.getElementById("share-wa").href=`https://wa.me/?text=${encodeURIComponent(shareText+" https://thebtcpulse.com")}`;
+  const rt=document.getElementById("r-time");if(rt)rt.textContent=t.updated+": "+shortDate(e.date);
+  if(window.__lastPrice)updateLiveTargets(window.__lastPrice);
 }
 
 function toggleTP(i,tp){let hist=getHistory();if(i>=hist.length)return;const k="t"+tp+"hit",cur=hist[i][k];if(cur===null)hist[i][k]=true;else if(cur===true)hist[i][k]=false;else hist[i][k]=null;saveHistory(hist);renderSignal(hist[0]);renderHistory();}
@@ -732,8 +795,32 @@ function renderTargetStats(){
   if(all.length>5){btn.style.display="";btn.textContent=tsExpanded?t.see_less:t.see_more;}else{btn.style.display="none";}
 }
 
-/* Live price */
-async function fetchLivePrice(){try{const r=await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT");const d=await r.json();const price=parseFloat(d.lastPrice);document.getElementById("live-val").textContent="$"+Math.round(price).toLocaleString("en-US");const entryBtc=SEED[0].btc;const pctFromEntry=((price-entryBtc)/entryBtc)*100;const ch=document.getElementById("live-change");ch.textContent=(pctFromEntry>=0?"+":"")+pctFromEntry.toFixed(2)+"%";ch.className="live-change "+(pctFromEntry>=0?"up":"down");}catch(e){document.getElementById("live-val").textContent="—";}}
+/* Share / subscribe / FAQ helpers */
+function copyShare(btn){const txt=(window.__shareText||"The BTC Pulse")+"\nhttps://thebtcpulse.com";navigator.clipboard.writeText(txt).then(()=>{btn.textContent="✓";setTimeout(()=>{btn.textContent="🔗";},1500);}).catch(()=>{});}
+
+function renderFAQ(){const items=FAQI18N[lang]||FAQI18N.en;const body=document.getElementById("faq-body");if(!body)return;body.innerHTML=items.map(it=>`<details class="faq-item"><summary>${it.q}</summary><div class="faq-a">${it.a}</div></details>`).join("");const tt=document.getElementById("faq-title");if(tt)tt.textContent=(L[lang].faq_title||"FAQ");}
+
+/* Live distance to each target (current week + live price) */
+function updateLiveTargets(price){const e=SEED[0];if(!e||e.dir==="NEUTRAL"||!price)return;const t=L[lang],bull=e.dir==="BULL";[1,2,3,4].forEach(n=>{const tgt=e["t"+n];const liveEl=document.getElementById("tp"+n+"-live");const card=document.getElementById("tp"+n+"-card");if(!liveEl)return;const reached=bull?(price>=tgt):(price<=tgt);if(reached){liveEl.className="tp-live reached";liveEl.innerHTML=`<span class="lv-dot"></span>${t.reached_live}`;if(card)card.classList.add("live-reached");}else{const dist=Math.abs((tgt-price)/price*100);liveEl.className="tp-live";liveEl.innerHTML=`<span class="lv-dot"></span>${t.live_word} · ${dist.toFixed(1)}%`;if(card)card.classList.remove("live-reached");}});}
+
+/* Live price (multi-source cascade: Binance -> Coinbase -> Kraken -> CoinGecko) */
+async function fetchLivePrice(){
+  const sources=[
+    async()=>{const r=await fetch("https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT");const d=await r.json();return parseFloat(d.lastPrice);},
+    async()=>{const r=await fetch("https://api.coinbase.com/v2/prices/BTC-USD/spot");const d=await r.json();return parseFloat(d.data.amount);},
+    async()=>{const r=await fetch("https://api.kraken.com/0/public/Ticker?pair=XBTUSD");const d=await r.json();const k=Object.keys(d.result)[0];return parseFloat(d.result[k].c[0]);},
+    async()=>{const r=await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd");const d=await r.json();return parseFloat(d.bitcoin.usd);}
+  ];
+  let price=null;
+  for(const src of sources){try{const p=await src();if(p&&!isNaN(p)&&p>0){price=p;break;}}catch(e){}}
+  const lv=document.getElementById("live-val");
+  if(price===null){if(!window.__lastPrice&&lv)lv.textContent="—";return;}
+  window.__lastPrice=price;
+  if(lv)lv.textContent="$"+Math.round(price).toLocaleString("en-US");
+  const entryBtc=SEED[0].btc;const pctFromEntry=((price-entryBtc)/entryBtc)*100;
+  const ch=document.getElementById("live-change");if(ch){ch.textContent=(pctFromEntry>=0?"+":"")+pctFromEntry.toFixed(2)+"%";ch.className="live-change "+(pctFromEntry>=0?"up":"down");}
+  updateLiveTargets(price);
+}
 
 /* ===== CHART (TradingView Widget - Lazy loaded) ===== */
 let chartLoaded=false;
@@ -778,15 +865,29 @@ function initLazyChart(){
 
 /* Boot */
 (function(){
-  const hist=getHistory();
-  if(hist.length>0){renderSignal(hist[0]);document.getElementById("r-time").textContent="16 abr 2026";}
-  renderHistory();
+  /* Language: ?lang > stored > browser > es. Keep root as x-default when no ?lang. */
+  let initLang="es",hadQuery=false;
+  try{
+    const q=new URL(location.href).searchParams.get("lang");
+    const stored=localStorage.getItem("btcpulse_lang");
+    const nav=(navigator.language||"en").slice(0,2).toLowerCase();
+    if(q&&LANGS.includes(q)){initLang=q;hadQuery=true;}
+    else if(stored&&LANGS.includes(stored))initLang=stored;
+    else if(LANGS.includes(nav))initLang=nav;
+  }catch(e){}
+  setLang(initLang,!hadQuery);
   fetchLivePrice();setInterval(fetchLivePrice,30000);
   initLazyChart();
+  /* Sticky live-price shadow on mobile */
+  const lp=document.querySelector(".live-price");
+  if(lp&&"IntersectionObserver"in window){
+    const sentinel=document.createElement("div");sentinel.setAttribute("aria-hidden","true");sentinel.style.cssText="width:1px;height:1px;";
+    lp.parentNode.insertBefore(sentinel,lp);
+    new IntersectionObserver(([e])=>{lp.classList.toggle("stuck",e.boundingClientRect.top<0);},{threshold:[0,1]}).observe(sentinel);
+  }
   /* Scroll reveal */
   const revealObs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target);}});},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
   document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
-  document.getElementById("disclaimer-link").textContent=L[lang].legal;
 })();
 </script>
 </body>
