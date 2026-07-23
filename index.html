@@ -581,7 +581,13 @@ function renderSignal(e){
     aa.innerHTML=`<div class="arrow-float"><svg width="100" height="100" viewBox="0 0 120 120" style="filter:drop-shadow(0 0 8px ${cr}20)"><defs><linearGradient id="ag" x1="0%" y1="${gy1}" x2="0%" y2="${gy2}"><stop offset="0%" stop-color="${cr}"/><stop offset="100%" stop-color="${cr2}"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="${cRing}" stroke-width="1"/><circle cx="60" cy="60" r="42" fill="${cFill}"/>${path}</svg></div><div class="dir-text ${bull?'bull':'bear'}">${bull?t.week_bull:t.week_bear}</div>`;
   }
   document.getElementById("r-entry").textContent=fmt(e.btc);
-  const dt=new Date(e.date+"T12:00:00");const dt2=new Date(dt);dt2.setDate(dt2.getDate()+7);
+  /* Validity window is always Friday morning -> next Friday morning, regardless of
+     which weekday the data was recorded on (WTREGEN can arrive Wed/Thu/Fri). */
+  const dt=new Date(e.date+"T09:00:00");
+  const wd=dt.getDay(); // 0=Sun..6=Sat, Friday=5
+  const toFri=(5-wd+7)%7;
+  const dt1=new Date(dt);dt1.setDate(dt1.getDate()+toFri);
+  const dt2=new Date(dt1);dt2.setDate(dt2.getDate()+7);
   const daysLeft=Math.max(0,Math.ceil((dt2-new Date())/(1000*60*60*24)));
   const countdown=daysLeft>0?`<div style="font-size:.5rem;color:var(--text5);margin-top:.15rem;">${daysLeft}${t.dleft}</div>`:`<div style="font-size:.5rem;color:var(--btc);margin-top:.15rem;">${t.expired}</div>`;
   document.getElementById("r-week").innerHTML=shortDate(e.date)+" "+t.week_to+" "+shortDate(dt2.toISOString().slice(0,10))+countdown;
