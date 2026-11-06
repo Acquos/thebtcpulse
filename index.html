@@ -284,7 +284,7 @@ h2{font-size:inherit;font-weight:inherit;margin:0;}
 .dir-arrow{text-align:center;font-size:.85rem;}
 .dir-price{font-weight:600;color:var(--text2);font-size:.62rem;text-align:center;}
 .dir-result{text-align:center;font-size:.7rem;font-weight:700;}
-.dir-result.neutral{color:var(--text3);font-weight:500;font-size:.6rem;}.dir-result.ok{color:var(--green);}.dir-result.fail{color:var(--red);opacity:.6;}.dir-result.wait{color:var(--text5);font-style:italic;font-size:.55rem;}
+.dir-result.ok{color:var(--green);}.dir-result.fail{color:var(--red);opacity:.6;}.dir-result.wait{color:var(--text5);font-style:italic;font-size:.55rem;}
 .see-more-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:.4rem 1rem;font-family:'Outfit',system-ui;font-size:.6rem;font-weight:600;color:var(--text3);cursor:pointer;transition:all .25s;letter-spacing:.03em;-webkit-tap-highlight-color:transparent;}
 .see-more-btn:hover{border-color:var(--btc);color:var(--btc);}
 
@@ -454,7 +454,6 @@ html{scroll-behavior:smooth;}
   <!-- Direction history (grouped with signal above) -->
   <section class="dir-hist reveal" aria-label="Direction track record">
     <h2 class="dir-hist-title" id="dir-hist-title">Historial de dirección</h2>
-    <p id="dir-history-rule" style="font-size:.65rem;color:var(--text3);line-height:1.5;margin-bottom:.8rem"></p>
     <div class="streak" id="streak-box"></div>
     <div class="dir-row dir-header"><div id="lbl-dh-dates">Semana</div><div style="text-align:center" id="lbl-dh-dir">Dir.</div><div style="text-align:center" id="lbl-dh-entry">Entrada</div><div style="text-align:center" id="lbl-dh-exit">Salida</div><div style="text-align:center" id="lbl-dh-result">✓/✗</div></div>
     <div id="dir-hist-body"></div>
@@ -510,14 +509,14 @@ const L={
 };
 /* Extra i18n keys merged into L at runtime (keeps the L block above untouched) */
 const EXTRA={
-  es:{dh_neutral:"Neutro",dh_neutral_plural:"neutras",dh_rule:"Las semanas con una variación absoluta inferior al 1 % se marcan como neutras y se excluyen del porcentaje de aciertos.",dleft:"d restantes",expired:"Señal expirada",updated:"Actualizado",live_word:"en vivo",sub_title:"Recibe la señal cada jueves",sub_btn:"Suscribirme",sub_ph:"tu@email.com",sub_note:"Gratis · No es asesoramiento financiero",sub_ok:"✓ ¡Hecho! Revisa tu correo.",sub_err:"Introduce un email válido.",sub_soon:"Suscripción disponible muy pronto.",faq_title:"Preguntas frecuentes"},
-  en:{dh_neutral:"Neutral",dh_neutral_plural:"neutral",dh_rule:"Weeks with an absolute price change below 1% are marked neutral and excluded from the accuracy rate.",dleft:"d left",expired:"Signal expired",updated:"Updated",live_word:"live",sub_title:"Get the signal every Thursday",sub_btn:"Subscribe",sub_ph:"you@email.com",sub_note:"Free · Not financial advice",sub_ok:"✓ Done! Check your inbox.",sub_err:"Enter a valid email.",sub_soon:"Subscriptions opening very soon.",faq_title:"FAQ"},
-  de:{dh_neutral:"Neutral",dh_neutral_plural:"neutral",dh_rule:"Wochen mit einer absoluten Kursänderung unter 1 % gelten als neutral und werden bei der Trefferquote nicht berücksichtigt.",dleft:"T übrig",expired:"Signal abgelaufen",updated:"Aktualisiert",live_word:"live",sub_title:"Erhalte das Signal jeden Donnerstag",sub_btn:"Abonnieren",sub_ph:"du@email.com",sub_note:"Kostenlos · Keine Finanzberatung",sub_ok:"✓ Fertig! Prüfe dein Postfach.",sub_err:"Gib eine gültige E-Mail ein.",sub_soon:"Anmeldung bald verfügbar.",faq_title:"Häufige Fragen"},
-  pt:{dh_neutral:"Neutro",dh_neutral_plural:"neutras",dh_rule:"Semanas com uma variação absoluta inferior a 1% são neutras e ficam excluídas da taxa de acerto.",dleft:"d restantes",expired:"Sinal expirado",updated:"Atualizado",live_word:"ao vivo",sub_title:"Receba o sinal toda quinta",sub_btn:"Inscrever-me",sub_ph:"voce@email.com",sub_note:"Grátis · Não é aconselhamento financeiro",sub_ok:"✓ Pronto! Verifique seu email.",sub_err:"Insira um email válido.",sub_soon:"Inscrições em breve.",faq_title:"Perguntas frequentes"},
-  it:{dh_neutral:"Neutro",dh_neutral_plural:"neutre",dh_rule:"Le settimane con una variazione assoluta inferiore all’1% sono neutre ed escluse dalla percentuale di successo.",dleft:"g rimasti",expired:"Segnale scaduto",updated:"Aggiornato",live_word:"live",sub_title:"Ricevi il segnale ogni giovedì",sub_btn:"Iscrivimi",sub_ph:"tu@email.com",sub_note:"Gratis · Non è consulenza finanziaria",sub_ok:"✓ Fatto! Controlla la posta.",sub_err:"Inserisci un'email valida.",sub_soon:"Iscrizioni disponibili a breve.",faq_title:"Domande frequenti"},
-  fr:{dh_neutral:"Neutre",dh_neutral_plural:"neutres",dh_rule:"Les semaines dont la variation absolue est inférieure à 1 % sont neutres et exclues du taux de réussite.",dleft:"j restants",expired:"Signal expiré",updated:"Mis à jour",live_word:"en direct",sub_title:"Reçois le signal chaque jeudi",sub_btn:"S'abonner",sub_ph:"toi@email.com",sub_note:"Gratuit · Pas un conseil financier",sub_ok:"✓ C'est fait ! Vérifie ta boîte.",sub_err:"Entre un email valide.",sub_soon:"Inscriptions bientôt disponibles.",faq_title:"Questions fréquentes"},
-  zh:{dh_neutral:"中性",dh_neutral_plural:"周中性",dh_rule:"价格绝对变化小于1%的周标记为中性，不计入方向命中率。",dleft:"天剩余",expired:"信号已过期",updated:"更新于",live_word:"实时",sub_title:"每周四获取信号",sub_btn:"订阅",sub_ph:"you@email.com",sub_note:"免费 · 非财务建议",sub_ok:"✓ 完成！请查收邮件。",sub_err:"请输入有效邮箱。",sub_soon:"订阅即将开放。",faq_title:"常见问题"},
-  ja:{dh_neutral:"中立",dh_neutral_plural:"週中立",dh_rule:"価格の変動率の絶対値が1%未満の週は中立とし、的中率の計算から除外します。",dleft:"日残り",expired:"シグナル期限切れ",updated:"更新日",live_word:"ライブ",sub_title:"毎週木曜にシグナルを受け取る",sub_btn:"登録",sub_ph:"you@email.com",sub_note:"無料・投資助言ではありません",sub_ok:"✓ 完了！メールをご確認ください。",sub_err:"有効なメールを入力してください。",sub_soon:"登録はまもなく開始します。",faq_title:"よくある質問"}
+  es:{dleft:"d restantes",expired:"Señal expirada",updated:"Actualizado",live_word:"en vivo",sub_title:"Recibe la señal cada jueves",sub_btn:"Suscribirme",sub_ph:"tu@email.com",sub_note:"Gratis · No es asesoramiento financiero",sub_ok:"✓ ¡Hecho! Revisa tu correo.",sub_err:"Introduce un email válido.",sub_soon:"Suscripción disponible muy pronto.",faq_title:"Preguntas frecuentes"},
+  en:{dleft:"d left",expired:"Signal expired",updated:"Updated",live_word:"live",sub_title:"Get the signal every Thursday",sub_btn:"Subscribe",sub_ph:"you@email.com",sub_note:"Free · Not financial advice",sub_ok:"✓ Done! Check your inbox.",sub_err:"Enter a valid email.",sub_soon:"Subscriptions opening very soon.",faq_title:"FAQ"},
+  de:{dleft:"T übrig",expired:"Signal abgelaufen",updated:"Aktualisiert",live_word:"live",sub_title:"Erhalte das Signal jeden Donnerstag",sub_btn:"Abonnieren",sub_ph:"du@email.com",sub_note:"Kostenlos · Keine Finanzberatung",sub_ok:"✓ Fertig! Prüfe dein Postfach.",sub_err:"Gib eine gültige E-Mail ein.",sub_soon:"Anmeldung bald verfügbar.",faq_title:"Häufige Fragen"},
+  pt:{dleft:"d restantes",expired:"Sinal expirado",updated:"Atualizado",live_word:"ao vivo",sub_title:"Receba o sinal toda quinta",sub_btn:"Inscrever-me",sub_ph:"voce@email.com",sub_note:"Grátis · Não é aconselhamento financeiro",sub_ok:"✓ Pronto! Verifique seu email.",sub_err:"Insira um email válido.",sub_soon:"Inscrições em breve.",faq_title:"Perguntas frequentes"},
+  it:{dleft:"g rimasti",expired:"Segnale scaduto",updated:"Aggiornato",live_word:"live",sub_title:"Ricevi il segnale ogni giovedì",sub_btn:"Iscrivimi",sub_ph:"tu@email.com",sub_note:"Gratis · Non è consulenza finanziaria",sub_ok:"✓ Fatto! Controlla la posta.",sub_err:"Inserisci un'email valida.",sub_soon:"Iscrizioni disponibili a breve.",faq_title:"Domande frequenti"},
+  fr:{dleft:"j restants",expired:"Signal expiré",updated:"Mis à jour",live_word:"en direct",sub_title:"Reçois le signal chaque jeudi",sub_btn:"S'abonner",sub_ph:"toi@email.com",sub_note:"Gratuit · Pas un conseil financier",sub_ok:"✓ C'est fait ! Vérifie ta boîte.",sub_err:"Entre un email valide.",sub_soon:"Inscriptions bientôt disponibles.",faq_title:"Questions fréquentes"},
+  zh:{dleft:"天剩余",expired:"信号已过期",updated:"更新于",live_word:"实时",sub_title:"每周四获取信号",sub_btn:"订阅",sub_ph:"you@email.com",sub_note:"免费 · 非财务建议",sub_ok:"✓ 完成！请查收邮件。",sub_err:"请输入有效邮箱。",sub_soon:"订阅即将开放。",faq_title:"常见问题"},
+  ja:{dleft:"日残り",expired:"シグナル期限切れ",updated:"更新日",live_word:"ライブ",sub_title:"毎週木曜にシグナルを受け取る",sub_btn:"登録",sub_ph:"you@email.com",sub_note:"無料・投資助言ではありません",sub_ok:"✓ 完了！メールをご確認ください。",sub_err:"有効なメールを入力してください。",sub_soon:"登録はまもなく開始します。",faq_title:"よくある質問"}
 };
 Object.keys(EXTRA).forEach(k=>{if(L[k])Object.assign(L[k],EXTRA[k]);});
 /* FAQ content per language (rendered into #faq-body) */
@@ -638,7 +637,6 @@ function renderDirectionHistory(){
   const body=document.getElementById("dir-hist-body");
   let html="";
   const dirWeeks=[];
-  document.getElementById("dir-history-rule").textContent=t.dh_rule;
   for(let i=1;i<completed.length;i++){
     const w=completed[i];
     const exitP=completed[i-1].btc;
@@ -646,15 +644,13 @@ function renderDirectionHistory(){
     const endDate=addUtcDays(w.date,8);
     const bull=w.dir==="BULL";
     const dirOk=bull?(exitP>w.btc):(exitP<w.btc);
-    const moveCents=Math.abs(Math.round(exitP*100)-Math.round(w.btc*100));
-    const neutral=moveCents*100<Math.round(w.btc*100);
-    dirWeeks.push({start:startDate,end:endDate,dir:w.dir,entry:w.btc,exit:exitP,ok:neutral?null:dirOk});
+    dirWeeks.push({start:startDate,end:endDate,dir:w.dir,entry:w.btc,exit:exitP,ok:dirOk});
   }
   const showWeeks=dirExpanded?dirWeeks:dirWeeks.slice(0,5);
   showWeeks.forEach(w=>{
     const arrow=w.dir==="BULL"?`<span style="color:var(--green)">▲</span>`:`<span style="color:var(--red)">▼</span>`;
-    const resultCls=w.ok===null?"neutral":w.ok?"ok":"fail";
-    const resultTxt=w.ok===null?t.dh_neutral:w.ok?t.dh_ok:t.dh_fail;
+    const resultCls=w.ok?"ok":"fail";
+    const resultTxt=w.ok?t.dh_ok:t.dh_fail;
     html+=`<div class="dir-row">
       <div class="dir-dates">${shortDate(w.start)} <span class="to">→</span> ${shortDate(w.end)}</div>
       <div class="dir-arrow">${arrow}</div>
@@ -669,11 +665,9 @@ function renderDirectionHistory(){
   /* Direction accuracy % */
   let dirHits=0;
   dirWeeks.forEach(w=>{if(w.ok)dirHits++;});
-  const evaluated=dirWeeks.filter(w=>w.ok!==null);
-  const neutralCount=dirWeeks.length-evaluated.length;
-  const dirPct=evaluated.length>0?Math.round(dirHits/evaluated.length*100):0;
+  const dirPct=dirWeeks.length>0?Math.round(dirHits/dirWeeks.length*100):0;
   const box=document.getElementById("streak-box");
-  if(dirWeeks.length>0){box.className="streak";box.innerHTML=`🔥 <span class="streak-num">${evaluated.length>0?dirPct+"%":"—"}</span><span class="streak-txt">${t.dir_accuracy} — ${t.total_year} (${dirHits}/${evaluated.length} · ${neutralCount} ${t.dh_neutral_plural})</span>`;}
+  if(dirWeeks.length>0){box.className="streak";box.innerHTML=`🔥 <span class="streak-num">${dirPct}%</span><span class="streak-txt">${t.dir_accuracy} — ${t.total_year} (${dirHits}/${dirWeeks.length})</span>`;}
   else{box.className="streak zero";box.innerHTML="";}
 }
 
